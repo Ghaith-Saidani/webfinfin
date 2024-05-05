@@ -26,7 +26,9 @@
                 <td>{{ blog.content }}</td>
                 <td>{{ blog.datePublished ? blog.datePublished|date('Y-m-d') : '' }}</td>
                 <td>{{ blog.nbrOfLikes }}</td>
-                <td>{{ blog.blogImage }}</td>
+              
+                   <td>  <img class="me-3 rounded-circle me-0 me-sm-3" src="{{ asset('images/blog/' ~ blog.blogImage) }}" width="55" height="55" alt=""></td>
+
                 <td>{{ blog.tags ? blog.tags|join(', ') : '' }}</td>
                 <td>
                     <a href="{{ path('app_blog_show', {'id': blog.id}) }}">show</a>

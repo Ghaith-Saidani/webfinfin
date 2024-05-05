@@ -11,12 +11,5 @@ settings_profile:
 
    
 
-formulaire:
-    path: '/user/formulaire'
-    controller: App\Controller\UserController::goToFormulaire
-    methods: ['GET']
 
-app_front_office:
-    path: '/front/index'
-    controller: App\Controller\FrontOfficeController::index
-    methods: ['GET']
+
