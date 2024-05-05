@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class FrontOfficeController extends AbstractController
 {
-    #[Route('/front/office', name: 'app_front_office')]
+    #[Route('', name: 'app_front_office')]
     public function index(): Response
     {
         return $this->render('front_office/index.html.twig', [
