@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Task Due Reminder</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 20px auto;
+            color: #333333;
+        }
+        h1 {
+            color: #007bff; /* Blue color for title */
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        .accent {
+            color: #007bff; /* Blue color for accent */
+            font-weight: bold;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666666;
+            text-align: center;
+        }
+        .footer a {
+            color: #007bff; /* Blue color for links */
+            text-decoration: none;
+        }
+        .logo {
+            display: block;
+            margin: 0 auto;
+            width: 80px; /* Adjusted the width of the logo */
+        }
+        .message-container {
+            background-color: #f2f2f2; /* Light gray background for message container */
+            border-radius: 8px;
+            padding: 20px;
+        }
+        .task-name {
+            color: #007bff; /* Blue color for task name */
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .list-name {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<div class="container">
+  <div class="container" style="background-color: #333333; color: #ffffff; padding: 20px;">
+    <div class="message-container" style="text-align: center; color: #333333;">
+        <h1 style="font-size: 24px;">Task Due Reminder</h1>
+        <img src="https://iili.io/JwWRQou.md.png" alt="PennyWise Logo" style="width: 150px; display: block; margin: 0 auto;">
+        <p style="font-size: 14px;">Dear user,</p>
+        <p class="task-name" style="font-size: 14px;"><span style="color: #333333; font-weight: bold;">Task:</span> <span class="accent" style="font-family: Arial, sans-serif;">{{ task.descriptiontask }}</span></p>
+        <p class="list-name" style="font-size: 14px;"><span style="color: #333333; font-weight: bold;">List:</span> <span style="font-family: Arial, sans-serif;">{{ listName }}</span></p>
+        <p style="font-size: 14px;">This is a friendly reminder that the above task is due in <span style="font-weight: bold;">TWO Days</span>.</p>
+        <p style="font-size: 14px;">Please make sure to complete it on time.</p>
+    </div>
+     <p class="footer" style="font-size: 14px; text-align: center; color: #ffffff; font-weight: bold;">Best regards,<br> PennyWise Team</p>
+</div>
+
+
+</div>
+</body>
+</html>

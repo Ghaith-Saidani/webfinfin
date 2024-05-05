@@ -1,0 +1,58 @@
+.delete-button{
+    position: relative;
+    padding: 10px;
+    width: 200px;
+    height: 60px;
+    border: 0cap;
+    border-radius: 10px;
+    background-color: red;
+    outline: none;
+    cursor: pointer;
+    color: #fff;
+    transition: .3s ease-in-out;
+
+}
+.delete-button:hover {
+    background-color: red;
+}
+
+.delete-button .icon {
+    position: absolute;
+    display: block;
+    left: 50%;
+    top: 50%;
+    width: 40%;
+    height: 40%;
+    transform: translate(-50%,-50%);
+    background-color: rgba(0, 0, 0, .1);
+    
+}
+
+.delete-button .icon .lid {
+    position: absolute;
+    z-index: 2;
+    left: 50%;
+    top: 23%;
+    width: 70%;
+    height: 10%;
+    background-color: #fff;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    transform: translate(-50%);
+    
+}
+
+.delete-button .icon .can {
+    position: absolute;
+    z-index: 2;
+    left: 50%;
+    top: 0%;
+    width: 60%;
+    height: 60%;
+    background-color: #fff;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    transform: translate(-50%);
+    
+}
+

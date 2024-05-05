@@ -1,0 +1,66 @@
+<body class="dashboard">
+{% block body %}
+<div id="preloader" class="preloader-wrapper">
+        <div class="loader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <div class="authincation">
+        <div class="container">
+            <div class="row justify-content-center align-items-center g-0">
+                <div class="col-xl-8">
+                    <div class="row g-0">
+                        <div class="col-lg-6">
+                            <div class="welcome-content">
+                                <div class="welcome-title">
+                                    <div class="mini-logo">
+                                        <a href="index.html">
+                                            <img src="images/logo-white.png" alt="" width="30" /></a>
+                                    </div>
+                                    <h3>Welcome to Ekash</h3>
+                                </div>
+                                {{ form_start(form) }}
+                                {{ form_row(form.firstName, { 'label':'Nom d\'utilisateur', 'attr': {'placeholder':'preNom d\'utilisateur...' } }) }}
+                                {{ form_row(form.lastName, { 'label':'Nom d\'utilisateur', 'attr': {'placeholder':'Nom d\'utilisateur...' } }) }}
+                                {{ form_row(form.email, { 'attr': {  'placeholder': 'Adresse email...' } }  ) }}
+                                {{ form_row(form.password, { 'label':'Mot de passe', 'attr': {'placeholder':'Mot de passe...' } }) }}
+                                
+                                <button type="submit" class="btn btn-success">Inscription</button>
+                                {{ form_end(form) }}
+                                <div class="privacy-social">
+                                    <div class="privacy-link"><a href="#">Have an issue with 2-factor
+                                            authentication?</a><br /><a href="#">Privacy Policy</a></div>
+                                    <div class="intro-social">
+                                        <ul>
+                                            <li><a href="#"><i class="fi fi-brands-facebook"></i></a></li>
+                                            <li><a href="#"><i class="fi fi-brands-twitter-alt"></i></a></li>
+                                            <li><a href="#"><i class="fi fi-brands-linkedin"></i></a></li>
+                                            <li><a href="#"><i class="fi fi-brands-pinterest"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endblock %}
+</body>
+
+{% block css %}
+ <link rel="stylesheet" href="{{asset('css/style.css')}}">
+ <link rel="stylesheet" href="{{asset('css/style1.css')}}">
+ <link rel="stylesheet" href="{{asset('vendor/toastr/toastr.min.css')}}">
+{% endblock %}
+
+{% block js %}
+ <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
+    <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <!--  -->
+    <!--  -->
+    <script src="{{asset('js/scripts.js')}}"></script>
+    <script>
+    
+</script>
+{% endblock %}

@@ -1,0 +1,90 @@
+{% block title%}
+
+{% endblock %}
+
+<body class="dashboard">
+{% block body %}
+   <div id="preloader" class="preloader-wrapper">
+        <div class="loader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <div class="authincation">
+        <div class="container">
+            <div class="row justify-content-center align-items-center g-0">
+                <div class="col-xl-8">
+                    <div class="row g-0">
+                        <div class="col-lg-6">
+                            <div class="welcome-content">
+                                <div class="welcome-title">
+                                    <div class="mini-logo">
+                                        <a href="index.html">
+                                            <img src="images/logo-white.png" alt="" width="30" /></a>
+                                    </div>
+                                    <h3>Welcome to Ekash</h3>
+                                </div>
+                                <div class="privacy-social">
+                                    <div class="privacy-link"><a href="#">Have an issue with 2-factor
+                                            authentication?</a><br /><a href="#">Privacy Policy</a></div>
+                                    <div class="intro-social">
+                                        <ul>
+                                            <li><a href="#"><i class="fi fi-brands-facebook"></i></a></li>
+                                            <li><a href="#"><i class="fi fi-brands-twitter-alt"></i></a></li>
+                                            <li><a href="#"><i class="fi fi-brands-linkedin"></i></a></li>
+                                            <li><a href="#"><i class="fi fi-brands-pinterest"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="auth-form">
+                                <h4>Reset</h4>
+                                {% if app.flashes('error') is not empty %}
+                                    <div class="alert alert-danger" >
+                                        {{ app.flashes('error')[0] }}
+                                    </div>
+                                {% endif %}
+                                 {{form_start(form,{'attr': {'novalidate': 'novalidate'}} )}}
+                                    <div class="row">
+                                        <div class="col-12 mb-3">
+                                            <label class="form-label">Code</label>
+                                             {{ form_row(form.resetCode, { 'label': false, 'attr': {  'class': 'form-control' } }) }}
+                                        </div>
+                                    </div>
+                                    <div class="mt-3 d-grid gap-2"><button type="submit" class="btn btn-primary me-8 text-white" onclick="{{path('newPass')}}">Submit</button></div>
+                                {{form_end(form)}}
+                                
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+</body>
+
+{% block css %}
+<link rel="stylesheet" href="{{asset('css/style.css')}}">
+ <link rel="stylesheet" href="{{asset('vendor/toastr/toastr.min.css')}}">
+.error-message {
+    background-color: #f8d7da; /* Reddish background color */
+    color: #721c24; /* Text color */
+    border: 1px solid #f5c6cb; /* Border color */
+    padding: 10px; /* Padding */
+    margin-bottom: 20px; /* Margin to separate from other elements */
+}
+{% endblock %}
+
+{% block js %}
+ <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
+    <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+
+    <script src="{{asset('js/scripts.js')}}"></script>
+{% endblock %}

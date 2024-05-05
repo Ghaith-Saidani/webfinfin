@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Wishlist{% endblock %}
+
+{% block content %}
+    <h1>Wishlist</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Idwishlist</th>
+                <td>{{ wishlist.idwishlist }}</td>
+            </tr>
+            <tr>
+                <th>Namewishlist</th>
+                <td>{{ wishlist.namewishlist }}</td>
+            </tr>
+            <tr>
+                <th>Monthlybudget</th>
+                <td>{{ wishlist.monthlybudget }}</td>
+            </tr>
+            <tr>
+                <th>Creationdate</th>
+                <td>{{ wishlist.creationdate ? wishlist.creationdate|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Savedbudget</th>
+                <td>{{ wishlist.savedbudget }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_wishlist_index') }}">back to list</a>
+
+    <a href="{{ path('app_wishlist_edit', {'idwishlist': wishlist.idwishlist}) }}">edit</a>
+
+    {{ include('wishlist/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'base2.html.twig' %}
+
+{% block title %}Debtcategory{% endblock %}
+
+{% block content %}
+    <h1>Debtcategory</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Namedebt</th>
+                <td>{{ debtcategory.NameDebt }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="card-footer">
+            <a href="{{ path('app_debtcategory_index') }}" class="btn btn-secondary">Back to List</a>
+        </div>
+{% endblock %}

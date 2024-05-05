@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Priority Debts {% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ asset('bundles/mercuryseriesflashy/css/flashy.css') }}">
+    <link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700' rel='stylesheet'>
+    <!-- Flashy depends on jQuery -->
+    <script src="//code.jquery.com/jquery.js"></script>
+    <!-- Load Flashy default JavaScript -->
+    <script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
+    <!-- Include Flashy default partial -->
+    {{ include('@MercurySeriesFlashy/flashy.html.twig') }}
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">Priority Debts</h5>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr style="font-weight: bold;">
+                            <th>Priority Score</th>
+                            <th>Debt ID</th>
+                            <th>Amount</th>
+                            <th>Interest Rate</th>
+                            <th>Amount to Pay</th>
+                            <th>Payment Date</th>
+                            <th>Management</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for index, debt in pagination %}
+                            <tr>
+                                <td style="background-color: rgba(0, 123, 255, {{ 1 - (index / pagination|length) }}); color: black;">{{ index + 1 }}</td>
+                                <td>{{ debt.iddebt }}</td>
+                                <td>{{ debt.amount }}</td>
+                                <td>{{ debt.interestrate }}</td>
+                                <td>{{ debt.amounttopay }}</td>
+                                <td>{{ debt.paymentdate|date('Y-m-d') }}</td>
+                                <td style="display: flex; justify-content: flex-end; align-items: center;">
+                                    <div class="category-type">
+                                        <ul>
+                                            <li>
+                                                <div class="right-category">
+                                                    <a href="{{ path('deposit_page', {'iddebt': debt.iddebt}) }}" class="btn btn-success">Deposit</a>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="pagination-box">
+                    <div class="pagination">
+                        {{ knp_pagination_render(pagination) }}
+                    </div>
+                </div>
+        </div>
+        <div class="card-footer">
+            <a href="{{ path('app_debt_index') }}" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
+{% endblock %}

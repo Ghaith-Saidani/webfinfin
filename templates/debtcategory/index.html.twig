@@ -1,0 +1,87 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Debtcategory {% endblock %}
+
+{% block content %}
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Debt categories</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <form action="" method="GET" class="search-form">
+                        <input type="text" id="searchInput" name="search" placeholder="Search by type..." class="form-control">
+                    </form>
+                </div>
+                <div class="table-responsive">
+                    <table class="table mb-0">
+                        <thead>
+                            <tr>
+                                <th>Name debt</th>
+                                <th>Management</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for debtcategory in pagination %}
+                                <tr class="debtCat-row">
+                                    <td>{{ debtcategory.NameDebt }}</td>
+                                    <td>
+                                        {{ include('debtcategory/_delete_form.html.twig') }}
+                                        <a href="{{ path('app_debtcategory_edit', {'NameDebt': debtcategory.NameDebt}) }}" style="color:inherit; text-decoration:none;">
+                                            <i class="fi fi-rs-pencil"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="2">no records found</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {# Pagination links #}
+                <div class="pagination">
+                    {{ knp_pagination_render(pagination) }}
+                </div>
+            </div>
+            <div class="add-goals-link">
+                <h5 class="mb-0">Add new debt category</h5>
+                <a href="{{ path('app_debtcategory_new') }}">
+                    <i class="fi fi-rr-square-plus"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const searchInput = document.getElementById('searchInput');
+            const table = document.querySelector('.table tbody');
+
+            const tableClickHandler = function (event) {
+                const targetRow = event.target.closest('.debtCat-row');
+                if (targetRow) {
+                    addMarkerFromRow(targetRow);
+                }
+            };
+
+            searchInput.addEventListener('input', function () {
+                const searchTerm = this.value.trim().toLowerCase();
+                const rows = table.querySelectorAll('.debtCat-row');
+
+                rows.forEach(row => {
+                    const typeCell = row.querySelector('td:nth-child(1)');
+                    const type = typeCell.textContent.trim().toLowerCase();
+                    
+                    if (type.includes(searchTerm)) {
+                        row.style.display = 'table-row';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}

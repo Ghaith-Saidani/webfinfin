@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Transaction page : PennyWise{% endblock %}
+
+{% block content  %}
+    <div class="verification section-padding">
+        <div class="container h-100">
+            <div class="row justify-content-center h-100 align-items-center">
+                <div class="col-xl-5 col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Add Transfer Transaction</h4>
+                        </div>
+                        <div class="card-body">
+                            {% if insufficientFundsError %}
+                                <div class="alert alert-danger">{{ insufficientFundsError }}</div>
+                            {% endif %}
+                            {{ form_start(form, { 'attr': {'novalidate': 'novalidate', 'id': 'transferForm'} }) }}
+                            <div class="form-row">
+                                <div class="mb-3 col-xl-12">
+                                    <label class="mr-sm-2">To Account</label>
+                                    {{ form_widget(form.toaccount, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                                <div class="mb-3 col-xl-12">
+                                    <label class="mr-sm-2">Payee</label>
+                                    {{ form_widget(form.idpayee, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                                <div class="mb-3 col-xl-12">
+                                    <label class="mr-sm-2">Amount</label>
+                                    {{ form_widget(form.amount, {'attr': {'class': 'form-control', 'placeholder': 'Enter amount'}}) }}
+                                    <div class="text-danger">{{ form_errors(form.amount) }}</div>
+                                </div>
+                                <div class="mb-3 col-xl-12">
+                                    <label class="mr-sm-2">Description</label>
+                                    {{ form_widget(form.description, {'attr': {'class': 'form-control', 'placeholder': 'Enter description'}}) }}
+                                    <div class="text-danger">{{ form_errors(form.description) }}</div>
+                                </div>
+                                <div class="col-12 mt-5">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <a href="{{ path('app_transaction') }}" class="btn btn-primary w-100">Back</a>
+                                        </div>
+                                        <div class="col-6">
+                                            <button type="submit" class="btn btn-success w-100">Save</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {{ form_end(form) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

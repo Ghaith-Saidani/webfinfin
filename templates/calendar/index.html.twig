@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %}PennyWise : Personal Finance Management Dashboard{% endblock %}</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/css/bootstrap.min.css" integrity="sha512-XC7DxR8LQ7W16ZuTWpDcS0O3/lYyvC2Iz/UjW8W1V/eIwP8G/eO/XKqjCJRYiS5uJZ8mK36/+XyL8X+r+P/w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- FullCalendar CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" />
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/toastr/toastr.min.css') }}">
+    <!-- qTip CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/qtip2/3.0.3/jquery.qtip.min.css" />
+    <!-- SweetAlert2 CSS pop up -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.0.18/sweetalert2.min.css">
+    
+    <style>
+        .fc-button {
+            background-color: #6c757d;
+            color: #fff;
+            border-color: #6c757d;
+            padding: 5px 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 14px;
+        }
+
+        .fc-button:hover {
+            background-color: #5a6268;
+            color: #fff;
+            border-color: #5a6268;
+        }
+
+        .fc-button:focus {
+            box-shadow: 0 0 0 0.2rem rgba(108, 117, 125, 0.5);
+        }
+
+        /* Custom CSS for event popup */
+        .event-popup {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            max-width: 400px;
+        }
+
+        .event-popup h3 {
+            margin-top: 0;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .event-popup p {
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        /* Bigger flag icon */
+        .flag-icon {
+            display: block;
+            margin: 0 auto;
+            width: 50px; /* Adjust the size as needed */
+            height: auto;
+        }
+    </style>
+</head>
+<body class="dashboard">
+    <div id="preloader" class="preloader-wrapper">
+        <div class="loader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+
+    <div id="main-wrapper">
+        <!-- Navbar and Sidebar -->
+        {% include 'navbar.html.twig' %}
+        {% include 'sidebar.html.twig' %}
+
+        <div class="content-body">
+            <div class="container">
+                <!-- Content -->
+                {% block content %}{% endblock %}
+                <!-- Calendar -->
+                <div id="calendar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    {% include 'footer.html.twig' %}
+    <!-- IncludeJS -->
+    {% include 'includejs.html.twig' %}
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- FullCalendar JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
+    <!-- qTip JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qtip2/3.0.3/jquery.qtip.min.js"></script>
+    <!-- SweetAlert2 JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.0.18/sweetalert2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Initialize the calendar
+            $('#calendar').fullCalendar({
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,agendaWeek,agendaDay'
+                },
+                defaultView: 'month',
+                eventLimit: true,
+                editable: false,
+                events: [
+                    // Add tasks as events with title, start, and end properties
+                    {% for task in task %}
+                    {
+                        title: '{{ task.descriptiontask }}',
+                        start: '{{ task.creationdate|date("Y-m-d") }}T{{ task.creationdate|date("H:i:s") }}',
+                        end: '{{ task.duedate|date("Y-m-d") }}T{{ task.duedate|date("H:i:s") }}',
+                        description: '{{ task.descriptiontask }}',
+                        allDay: false,
+                        // Set event color based on task priority
+                        color: {% if task.priority == 'low' %}
+                            '#00b300' // Light green
+                        {% elseif task.priority == 'medium' %}
+                            '#f1b605' // Light orange
+                        {% elseif task.priority == 'high' %}
+                            'red' // Light red
+                        {% endif %}
+                    },
+                    {% endfor %}
+                ],
+                // Button text and styling
+                buttonText: {
+                    today: 'Today',
+                    month: 'Month',
+                    week: 'Week',
+                    day: 'Day'
+                },
+                // Today button styling
+                nowIndicator: true,
+                // Event click handler
+                eventClick: function(calEvent, jsEvent, view) {
+                    var eventPopupContent = '<h3>' + calEvent.title + '</h3>' +
+                        '<p><strong>Description:</strong> ' + calEvent.description + '</p>' +
+                        '<p><strong>Start:</strong> ' + calEvent.start.format('YYYY-MM-DD HH:mm:ss') + '</p>';
+                    Swal.fire({
+                        title: 'Event Details',
+                        html: eventPopupContent,
+                        icon: 'info',
+                        confirmButtonText: 'Close'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

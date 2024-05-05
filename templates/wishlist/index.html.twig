@@ -1,0 +1,455 @@
+{% extends 'base2.html.twig' %}
+{% block title %}Wishlist{% endblock %}
+{% block content %}
+    <link rel="stylesheet" href="{{ asset('bundles/mercuryseriesflashy/css/flashy.css') }}">
+    <link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    
+
+    <!-- Flashy depends on jQuery -->
+    <script src="//code.jquery.com/jquery.js"></script>
+    <!-- Load Flashy default JavaScript -->
+    <script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
+    <!-- Include Flashy default partial -->
+    {{ include('@MercurySeriesFlashy/flashy.html.twig') }}
+
+
+<div class="row">
+
+            <div class="col-12">
+                <div class="page-title">
+                    <div class="row align-items-center justify-content-between">
+                        <div class="col-xl-4">
+                            <div class="page-title-content">
+                                <h3>Goals</h3>
+                                <p class="mb-2">Welcome Pennywise Finance Management</p>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="breadcrumbs"><a href="#">Home </a>
+                                <span><i class="fi fi-rr-angle-small-right"></i></span>
+                                <a href="#">Goals</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="goals-tab">
+            <div class="row g-0">
+                <div class="col-xl-3">
+                    <div class="nav d-block">
+                        <div class="row">
+                            {% for wishlist in wishlists %}
+                            <div class="col-xl-12 col-md-6">
+                                <div class="goals-nav" data-wishlist-id="{{ wishlist.idwishlist }}" data-bs-toggle="pill" data-bs-target="#a1" style="display: flex; justify-content: space-between;" data-monthly-budget="{{ wishlist.monthlyBudget }}" data-saved-budget="{{ wishlist.savedBudget }}">
+                                    <div class="goals-nav-text">
+                                        <h3>{{ wishlist.namewishlist }}</h3>
+                                    </div>
+                                    <div class="category-type">
+                                        <ul>
+                                            <li>
+                                                <div class="right-category">
+                                                    <span><a href="{{ path('app_wishlist_edit', {'idwishlist': wishlist.idwishlist}) }}" style="color:inherit; text-decoration:none;"><i class="fi fi-rs-pencil"></i></a></span>
+                                                    <span><a href="{{ path('app_wishlist_show', {'idwishlist': wishlist.idwishlist}) }}" style="color:inherit; text-decoration:none;"><i class="fi fi-rr-eye"></i></a></span>
+                                                    <span>{{ include('wishlist/_delete_form.html.twig', { 'wishlist': wishlist }) }}</span>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div> 
+                
+                    <div class="add-goals-link">
+                        <h5 class="mb-0">Add new Wishlist</h5>
+                        <a href="{{ path('app_wishlist_new') }}">
+                            <i class="fi fi-rr-square-plus"></i>
+                        </a>
+                    </div>
+                </div>
+                                   
+                <div class="col-xl-9">
+                    <div class="tab-content goals-tab-content">
+                        <div class="tab-pane show active" id="a1">
+                            <div class="goals-tab-title">
+                                <h3 id="selected-wishlist-name">Selected Wishlist Name</h3>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between">
+                                                <div>
+                                                    <span>Monthly Budget</span>
+                                                    <h3><i class="fas fa-coins monthly-budget-icon"></i> <span id="monthly-budget"></span></h3>
+                                                </div>
+                                                <div class="text-end">
+                                                    <span>Saved Budget</span>
+                                                    <h3><i class="fas fa-piggy-bank"></i> <span id="saved-budget"></span></h3>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                                                
+                                {% include 'wishlistitem/index.html.twig' %}
+                                 <!-- Pagination -->
+                                <div id="pagination">
+                                </div>
+                              
+                                {% include 'itemcategory/index.html.twig' %}
+                                                       
+                                 <div class="col-xl-12" style="margin-top: 30px;">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h4 class="card-title">Completed Wishlist Items</h4>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="category-type">
+                                                {# Display the statistics #}
+                                                <div style="display: flex; justify-content: center;">
+                                                    <canvas id="completedWishlistItemChartCanvas" width="50" height="25"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            
+                            </div>
+                        </div>
+                    </div>        
+
+                </div>
+                        
+                
+            </div>   
+        </div>
+        
+
+</div>
+
+
+<!-- Add this line to the <head> section of your HTML file -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Select the first wishlist tab
+    const firstWishlistTab = document.querySelector('.goals-nav');
+    firstWishlistTab.classList.add('active');
+
+    // Update details for the first wishlist
+    updateSelectedWishlistDetails(firstWishlistTab);
+
+    // Trigger a click event on the first wishlist tab
+    firstWishlistTab.click();
+
+    // Add event listener for wishlist tab clicks
+    document.querySelectorAll('.goals-nav').forEach(item => {
+        item.addEventListener('click', event => {
+            // Update details for the clicked wishlist tab
+            updateSelectedWishlistDetails(item);
+        });
+    });
+});
+
+function updateSelectedWishlistDetails(selectedWishlistTab) {
+    const selectedWishlistName = selectedWishlistTab.querySelector('.goals-nav-text h3').innerText;
+    const monthlyBudget = selectedWishlistTab.getAttribute('data-monthly-budget');
+    const savedBudget = selectedWishlistTab.getAttribute('data-saved-budget');
+
+    document.getElementById('selected-wishlist-name').innerText = selectedWishlistName;
+    document.getElementById('monthly-budget').innerText = monthlyBudget +'$';
+    document.getElementById('saved-budget').innerText = savedBudget +'$';
+
+    // Fetch wishlist items via AJAX and update the table
+    const wishlistId = selectedWishlistTab.getAttribute('data-wishlist-id');
+    fetchWishlistItems(wishlistId);
+}
+
+
+
+function fetchWishlistItems(wishlistId, page=1) {
+    // Make AJAX request to fetch wishlist items with progress and delete form content
+   $.ajax({
+    url: '/wishlist/' + wishlistId + '/items_with_progress?page=' + page,
+    method: 'GET',
+    success: function(data) {
+        // Clear existing wishlist items
+        $('#wishlist-items-table tbody').empty();
+
+        // Append received wishlist items to table
+        data.forEach(function(wishlistitem) {
+            // Calculate progress percentage
+            var progress = Math.round(wishlistitem.progress);
+            progress = Math.min(progress, 100);
+
+            // Create a table row element
+            var row = $('<tr>');
+
+            // Append table data cells for wishlist item details
+            row.html(
+                '<td>' + 
+                '<span class="table-category-icon"><i class="bg-purple-500 fi fi-sr-star"></i>'+ wishlistitem.namewishlistitem + '</span>'+
+                '</td>' +
+                '<td>' + wishlistitem.price + '</td>' +
+                '<td>' +
+                '<span><i class="fi fi-rr-calendar"></i></span>' +
+                '<span style="margin-left: 5px;">' + (wishlistitem.creationdate ? formatDate(wishlistitem.creationdate) : '') + '</span>' +
+                '</td>' +
+                '<td>' + wishlistitem.priority + '</td>' +
+                '<td>' + wishlistitem.status + '</td>' +
+                '<td>' +
+                '<div class="progress progress-bar-with-tooltip" style="height: 25px;" ' +
+                'title="Estimate Purchase Date: ' + wishlistitem.estimated_purchase_date + '">' +
+                '<div class="progress-bar" role="progressbar" style="width: ' + progress + '%;" aria-valuenow="' + progress + '" aria-valuemin="0" aria-valuemax="100">' + progress + '%</div>' +
+                '</div>' +
+                '</td>' +
+                '<td>' +
+                '<div class="category-type" style="display: flex; justify-content: right;">' +
+                '<ul>' +
+                '<li>' +
+                '<div class="right-category">' +
+                '<span><a href="/wishlistitem/' + wishlistitem.idwishlistitem + '/edit" style="color:inherit; text-decoration:none;"><i class="fi fi-rs-pencil"></i></a></span>' +
+                '<span class="get-item-info" data-item-id="' + wishlistitem.idwishlistitem + '"><i class="fi fi-rr-eye"></i></span>' +
+                '<span>' + wishlistitem.deleteForm + '</span>' +
+                '</div>' +
+                '</li>' +
+                '</ul>' +
+                '</div>' +
+                '</td>'+
+                '</tr>'
+            );
+
+            // Append the table row to the table body
+            $('#wishlist-items-table tbody').append(row);
+        });
+
+        // Update pagination controls
+            $('#wishlist-items-pagination').html(data.wishlistitems);
+
+        
+    // Event listener for fetching product information
+            $('.get-item-info').click(function(){
+                var itemId = $(this).data('item-id');
+                console.log('Fetching product information for item:', itemId);
+               $.ajax({
+        url: '/wishlistitem/' + itemId + '/item/price',
+        type: 'GET',
+        success: function(response){
+            console.log('Received product information:', response);
+            console.log('Type of response:', typeof response);
+            var productInfo = response.price_and_availability;
+            console.log('Type of product info :', typeof productInfo);
+
+            var productName, productImageURL, productPrice, productAvailability;
+
+            // Split the product information string into an array of lines
+            var productLines = productInfo.split('\n');
+
+            // Loop through the lines and extract the relevant information
+            productLines.forEach(function(line) {
+                if (line.startsWith('Name:')) {
+                    productName = line.substring(6);
+                } else if (line.startsWith('Image URL:')) {
+                    productImageURL = line.substring(11);
+                } else if (line.startsWith('Price:')) {
+                    productPrice = line.substring(7);
+                } else if (line.startsWith('Availability:')) {
+                    productAvailability = line.substring(14);
+                } else if (line.startsWith('URL:')) {
+                    productURL = line.substring(5);
+                }
+            });
+            
+            
+           var productHTML = `
+    <div class="col-xl-12">
+        <div class="card position-relative">
+            <button type="button" class="close p-0 position-absolute" aria-label="Close" style="top: 5px; right: 5px; background-color: transparent; border: 1px solid #007bff; color: #007bff; width: 30px; height: 30px;">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <div class="card-body d-flex">
+                <img src="${productImageURL}" alt="${productName}" class="img-fluid mr-3" style="height: 200px; transition: transform 0.3s;">
+                <div style="margin-left: 15px; flex-grow: 1;">
+                    <h4 class="card-title" style="font-size: 18px;">${productName}</h4>
+                    <p style="margin-bottom: 10px;"><strong>Price:</strong> ${productPrice}</p>
+                    <p style="margin-bottom: 10px;"><strong>Availability:</strong> ${productAvailability}</p>
+                    <p style="margin-bottom: 5px; margin-top: auto;"><a href="${productURL}" target="_blank" style="color: #007bff;"><i class="fi fi-rr-link"></i> View on Amazon</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+`;
+
+// Display product information above the table
+            $('#wishlist-items').before(productHTML);            
+            // Add hover effect to make the image look bigger
+            document.querySelectorAll('.card-body img').forEach(img => {
+                img.addEventListener('mouseover', function() {
+                    this.style.transform = 'scale(1.1)';
+                });
+
+                img.addEventListener('mouseout', function() {
+                    this.style.transform = 'scale(1)';
+                });
+            });
+
+            // Add event listener to hide the div when the close icon is clicked
+            document.querySelectorAll('.close').forEach(closeBtn => {
+                closeBtn.addEventListener('click', function() {
+                    this.closest('.col-xl-12').remove();
+                });
+            });
+
+            
+            
+           
+        
+
+        },
+                    error: function(){
+                        console.error('Error fetching product information.');
+                        $('#productInfo').html('<p>Error fetching product information.</p>');
+                    }
+                });
+            });
+        },
+        error: function(xhr, status, error) {
+            console.error('Error fetching wishlist items with progress and delete form:', error);
+        }
+        });
+
+}
+
+// Fetch wishlist items when page changes
+$(document).on('click', '#wishlist-items-pagination a.page-link', function(e) {
+    e.preventDefault();
+    var page = $(this).attr('href').split('page=')[1];
+    fetchWishlistItems(wishlistId, page);
+});
+
+
+
+// Enable tooltips for progress bars
+$(document).ready(function() {
+    fetchWishlistItems(wishlistId, page);
+    $(document).on('mouseenter', '.progress-bar-with-tooltip', function() {
+        var estimatePurchaseDate = $(this).data('estimate-purchase-date');
+        $(this).attr('title', 'Estimate Purchase Date: ' + estimatePurchaseDate);
+    });
+});
+
+
+
+
+function formatDate(dateString) {
+    var date = new Date(dateString);
+    var year = date.getFullYear();
+    var month = ('0' + (date.getMonth() + 1)).slice(-2);
+    var day = ('0' + date.getDate()).slice(-2);
+    return year + '-' + month + '-' + day;
+}
+
+
+$(document).ready(function() {
+    // Function to assign monthly budget when icon is clicked
+    $('.monthly-budget-icon').click(function(e) {
+        e.preventDefault();
+        const selectedWishlistTab = document.querySelector('.goals-nav.active');
+        const selectedWishlistId = selectedWishlistTab.getAttribute('data-wishlist-id');
+        console.log(selectedWishlistId);
+        // AJAX request to assign monthly budget
+        $.ajax({
+            url: '/wishlist/' + selectedWishlistId + '/assign_monthly_budget',
+            method: 'POST',
+            data: { wishlistId: selectedWishlistId }, // Send selectedWishlistId as data
+            success: function(response) {
+                // Update the saved budget and total balance
+                $('#saved-budget').text(response.savedBudget + '$');
+                $('#monthly-budget').text(response.monthlyBudget +'$');
+
+                // Show success message
+                console.log('Monthly budget assigned successfully!');
+            },
+            error: function(xhr, status, error) {
+                // Show error message
+                console.error('Error assigning monthly budget: ' + error);
+            }
+        });
+    });
+});
+
+
+
+
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+
+<script>
+        function updateChart(completedItemCount, remainingItemCount) {
+    const selectedWishlistTab = document.querySelector('.goals-nav.active');
+    const selectedWishlistId = selectedWishlistTab.getAttribute('data-wishlist-id');
+
+    var completedWishlistItemChartCanvas = document.getElementById('completedWishlistItemChartCanvas').getContext('2d');
+    var completedWishlistItemChart = new Chart(completedWishlistItemChartCanvas, {
+        type: 'doughnut',
+        data: {
+            labels: ['Completed', 'Remaining'],
+            datasets: [{
+                label: 'Wishlist Items',
+                data: [completedItemCount, remainingItemCount],
+                backgroundColor: [
+                    'rgba(54, 162, 235, 0.6)',
+                    'rgba(255, 99, 132, 0.6)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            cutoutPercentage: 50
+        }
+    });
+}
+
+// Fetch statistics data on page load
+document.addEventListener('DOMContentLoaded', function() {
+    const selectedWishlistTab = document.querySelector('.goals-nav.active');
+    const selectedWishlistId = selectedWishlistTab.getAttribute('data-wishlist-id');
+    fetchStatistics(selectedWishlistId);
+});
+
+// Fetch statistics data when wishlist changes
+document.querySelectorAll('.goals-nav').forEach(item => {
+    item.addEventListener('click', event => {
+        const selectedWishlistId = item.getAttribute('data-wishlist-id');
+        console.log(selectedWishlistId)
+        fetchStatistics(selectedWishlistId);
+    });
+});
+
+function fetchStatistics(idwishlist) {
+    $.ajax({
+        url: '/statistics/' + idwishlist ,
+        type: 'GET',
+        success: function(response) {
+            updateChart(response.completedItemCount, response.remainingItemCount);
+        },
+        error: function(xhr, status, error) {
+            console.error('Error fetching statistics: ' + error);
+        }
+    });
+}
+
+
+    </script>
+
+
+{% endblock %}

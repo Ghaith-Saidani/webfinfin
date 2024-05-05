@@ -1,0 +1,29 @@
+{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+<div class="card-body">
+    {% if form_errors(form) %}
+        <div class="alert alert-danger">
+            {% for error in form_errors(form) %}
+                {{ error.message }}
+            {% endfor %}
+        </div>
+    {% endif %}
+    <div class="form-group"> <!-- Container for form elements -->
+        <div class="mb-3"> <!-- Wrapper for form label -->
+            {{ form_label(form.namewishlist, 'Name', {'label_attr': {'class': 'form-label'}}) }}
+        </div>
+        <div class="mb-3"> <!-- Wrapper for form widget and errors -->
+            {{ form_widget(form.namewishlist, {'attr': {'class': 'form-control form-text'}}) }}
+            {{ form_errors(form.namewishlist, {'attr': {'class': 'form-text'}}) }}
+        </div>
+        <div class="mb-3"> <!-- Wrapper for form label -->
+            {{ form_label(form.monthlybudget, 'Monthly Budget', {'label_attr': {'class': 'form-label'}}) }}
+        </div>
+        <div class="mb-3"> <!-- Wrapper for form widget and errors -->
+            {{ form_widget(form.monthlybudget, {'attr': {'class': 'form-control form-text'}}) }}
+            {{ form_errors(form.monthlybudget, {'attr': {'class': 'form-text'}}) }}
+        </div>
+
+        <button type="submit" class="btn btn-success w-100">{{ button_label|default('Save') }}</button>
+    </div>
+</div>
+{{ form_end(form) }}

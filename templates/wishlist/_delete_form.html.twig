@@ -1,0 +1,36 @@
+<form id="delete-wishlist-form-{{ wishlist.idwishlist }}" method="post" action="{{ path('app_wishlist_delete', {'idwishlist': wishlist.idwishlist}) }}">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ wishlist.idwishlist) }}">
+    <a href="#" class="delete-wishlist-link" style="color: inherit; text-decoration: none;"><i class="fi fi-rr-trash"></i></a>   
+</form>
+
+<!-- Include jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script>
+    // JavaScript to handle deletion confirmation and AJAX request
+    $(document).ready(function() {
+        $('a.delete-wishlist-link').click(function(event) {
+            event.preventDefault(); // Prevent default action (i.e., following the link)
+
+            var deleteForm = $(this).closest('form');
+            var deleteUrl = deleteForm.attr('action');
+            
+            if (confirm('Are you sure you want to delete this wishlist?')) {
+                $.ajax({
+                    url: deleteUrl,
+                    method: 'POST', // Ensure it's a POST request
+                    data: deleteForm.serialize(),
+                    success: function(response) {
+                        // Handle success response (remove wishlist from UI)
+                        console.log('Wishlist deleted successfully');
+                        deleteForm.closest('.col-xl-12').remove(); // Remove deleted wishlist from UI
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle error response
+                        console.error('Error deleting wishlist:', error);
+                    }
+                });
+            }
+        });
+    });
+</script>

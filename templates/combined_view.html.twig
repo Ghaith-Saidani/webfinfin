@@ -1,0 +1,37 @@
+{% extends 'base2.html.twig' %}
+
+{% block title %}Wishlist{% endblock %}
+
+{% block body %}
+
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title">
+                    <div class="row align-items-center justify-content-between">
+                        <div class="col-xl-4">
+                            <div class="page-title-content">
+                                <h3>Goals</h3>
+                                <p class="mb-2">Welcome Pennywise Finance Management</p>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="breadcrumbs"><a href="#">Home </a>
+                                <span><i class="fi fi-rr-angle-small-right"></i></span>
+                                <a href="#">Goals</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="goals-tab">
+            <div class="row g-0">
+
+                {{ include('wishlist/index.html.twig') }}
+                {{ include('wishlistitem/index.html.twig') }}
+                                
+                
+            </div>   
+        </div>
+
+{% endblock %}

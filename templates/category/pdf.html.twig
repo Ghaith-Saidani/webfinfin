@@ -1,0 +1,33 @@
+    <h1>PennyWise</h1>
+
+<div style="text-align: center;">
+    
+
+    <center><h1>category List</h1></center>
+    <br><br><br>
+    
+    <div style="display: flex; fl ex-wrap: wrap; justify-content: space-around;">
+ {% for category in categories %}
+         <div style="width: 650px; margin: 10px; padding: 10px; border: 1px solid #ccc;background-color:#6691ff;">
+
+
+    <!-- Contenu de votre div -->
+
+            <h2>Category Name</h2>
+            <p>{{ category.name }}</p>
+            <h2>The budget limit for your category</h2>
+            <p>{{ category.budgetlimit }}</p>
+            <h2>Wallet</h2>
+            <p>{{ category.idwallet.name }}</p>
+           
+           
+        </div>
+    {% endfor %}
+</div>
+
+
+
+<br><br><br><br><br><br>
+</div>
+<div>
+</div>

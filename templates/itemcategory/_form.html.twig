@@ -1,0 +1,16 @@
+{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+    <div class="card-body">
+        <div class="form-group"> <!-- Container for form elements -->
+            <div class="mb-3"> <!-- Wrapper for form label -->
+                {{ form_label(form.nameitemcategory, 'Name', {'label_attr': {'class': 'form-label'}}) }}
+            </div>
+            <div class="mb-3"> <!-- Wrapper for form widget and errors -->
+                {{ form_widget(form.nameitemcategory, {'attr': {'class': 'form-control form-text'}}) }}
+                {{ form_errors(form.nameitemcategory, {'attr': {'class': 'form-text'}}) }}
+            </div>
+
+            <button type="submit" class="btn btn-success w-100">{{ button_label|default('Save') }}</button>
+        </div>
+</div>    
+{{ form_end(form) }}
+         

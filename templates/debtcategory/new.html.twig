@@ -1,0 +1,43 @@
+{% extends 'base2.html.twig' %}
+
+{% block title %}New Debtcategory{% endblock %}
+
+{% block content %}
+
+<div class="content-body">
+    <div class="verification section-padding">
+        <div class="container h-100">
+            <div class="row justify-content-center h-100 align-items-center">
+                <div class="col-xl-5 col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Create a debt category</h4>
+                        </div>
+                        <div class="card-body">
+                            <form method="post">
+                                {{ include('debtcategory/_form.html.twig') }}
+                                {% if errors is not empty %}
+                                    <div class="alert alert-danger mt-3" role="alert">
+                                        <ul>
+                                            {% for error in errors %}
+                                                <li>{{ error }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                {% endif %}
+                                <button type="submit" class="btn btn-success w-100">Save</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card-footer">
+            <a href="{{ path('app_debtcategory_index') }}" class="btn btn-secondary">Back to List</a>
+        </div>
+
+
+{% endblock %}

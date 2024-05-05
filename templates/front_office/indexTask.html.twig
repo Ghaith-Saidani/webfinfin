@@ -1,0 +1,164 @@
+{% extends 'baseFront.html.twig' %}
+
+{% block title %}Hello FrontOfficeController!{% endblock %}
+
+{% block content %}
+    <!-- Banner Section start -->
+    <section class="banner-section inner-banner fees">
+        <div class="overlay">
+            <div class="shape-area">
+                <img src="{{ asset('assets/images/banner-fees.png') }}" class="shape-1" alt="image">
+            </div>
+            <div class="banner-content">
+                <div class="container wow fadeInUp">
+                    <div class="row align-items-center">
+                        <div class="col-lg-8 col-md-7">
+                            <div class="main-content">
+                                <h1>Task</h1>
+                                <div class="breadcrumb-area">
+                                    <nav aria-label="breadcrumb">
+                                        <ol class="breadcrumb d-flex align-items-center">
+                                            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                                            <li class="breadcrumb-item"><a href="javascript:void(0)">Personal</a></li>
+                                            <li class="breadcrumb-item active" aria-current="page">Task</li>
+                                        </ol>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Banner Section end -->
+
+    <!-- Features start -->
+    <section class="global-payment features">
+        <div class="container">
+            <h2 class="mb-4 constant-animation" style="font-family: 'Montserrat', sans-serif; color: #004080; text-align: center; font-size: 48px; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 30px;">Your Tasks</h2>
+
+            <div class="row">
+                {% for task in tasks %}
+                    <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                        <div class="card" id="card-{{ loop.index }}">
+                            <div class="card-body" style="text-align: center;">
+                                <h4 class="card-title" style="font-family: 'Pacifico', cursive;">{{ task.descriptiontask }}</h4>
+                                <i class="fas fa-check-circle fa-3x icon"></i>
+                                <p class="card-text" style="font-family: 'Roboto', sans-serif; font-size: 14px;">Amount to Pay: {{ task.mtapayer }}</p>
+                                <p class="card-text" style="font-family: 'Roboto', sans-serif; font-size: 14px;">Priority: {{ task.priority }}</p>
+                                <p class="card-text" style="font-family: 'Roboto', sans-serif; font-size: 14px;">Due Date: {{ task.duedate ? task.duedate|date('Y-m-d') : '' }}</p>
+                                <p class="card-text" style="font-family: 'Roboto', sans-serif; font-size: 14px;">Status: {{ task.statustask }}</p>
+                                <p class="card-text" style="font-family: 'Roboto', sans-serif; font-size: 14px;">Creation Date: {{ task.creationdate ? task.creationdate|date('Y-m-d') : '' }}</p>
+                                <p class="card-text" style="font-family: 'Roboto', sans-serif; font-size: 14px;">Todo List: {{ task.idtodo }}</p>
+                                <p class="card-text" style="font-family: 'Roboto', sans-serif; font-size: 14px;">Subcategory: {{ task.idsubcategory }}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <p class="col-12">No records found</p>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    <!-- Features end -->
+
+    <!-- JavaScript for animation effects on hover -->
+    <script>
+        // Define the colors for hover state
+        const hoverBackgroundColor = '#E6E6FA'; // Lavender
+        const hoverTitleColor = '#800080'; // Purple
+        const hoverTextColor = '#4B0082'; // Indigo
+        const hoverIconColor = 'blue'; // Blue
+
+        document.querySelectorAll('.card').forEach((card, index) => {
+            card.addEventListener('mouseenter', () => {
+                // Change background color on hover
+                card.style.backgroundColor = hoverBackgroundColor;
+                // Change title color on hover
+                card.querySelector('.card-title').style.color = hoverTitleColor;
+                // Change text color on hover
+                card.querySelectorAll('.card-text').forEach(text => {
+                    text.style.color = hoverTextColor;
+                });
+                // Change icon color on hover
+                card.querySelector('.icon').style.color = hoverIconColor;
+                card.classList.add('animated', 'pulse'); // Add animation class
+                card.querySelector('.icon').classList.add('animated', 'rubberBand');
+            });
+            card.addEventListener('mouseleave', () => {
+                // Reset background color on mouse leave
+                card.style.backgroundColor = 'var(--card-background-color)';
+                // Reset title color on mouse leave
+                card.querySelector('.card-title').style.color = 'var(--card-label-color)';
+                // Reset text color on mouse leave
+                card.querySelectorAll('.card-text').forEach(text => {
+                    text.style.color = 'var(--text-color)';
+                });
+                // Reset icon color on mouse leave
+                card.querySelector('.icon').style.color = 'initial';
+                card.classList.remove('animated', 'pulse'); // Remove animation class
+                card.querySelector('.icon').classList.remove('animated', 'rubberBand');
+            });
+        });
+    </script>
+
+    <!-- Custom CSS styles -->
+    <style>
+        .constant-animation {
+            animation: constantAnimation 2s infinite;
+        }
+
+        @keyframes constantAnimation {
+            0% {
+                transform: translateX(-5px);
+            }
+            50% {
+                transform: translateX(5px);
+            }
+            100% {
+                transform: translateX(-5px);
+            }
+        }
+
+        .custom-table {
+            background-color: #f8f9fa;
+        }
+
+        .custom-table th,
+        .custom-table td {
+            color: #333;
+        }
+
+        .custom-table thead th {
+            background-color: #343a40;
+            color: #fff;
+        }
+
+        .custom-table tbody tr:hover {
+            background-color: #e9ecef;
+        }
+
+        /* Icon animation */
+        .icon {
+            transition: color 0.3s ease-in-out;
+        }
+
+        .icon:hover {
+            color: red; /* Change the color on hover */
+            animation: pulse 1s infinite; /* Add animation on hover */
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
+{% endblock %}

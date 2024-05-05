@@ -1,0 +1,57 @@
+{% block title %}Statistiques des dépenses pour {{ category.name }}{% endblock %}
+
+{% block content %}
+   <h1>Statistiques des dépenses pour {{ category.name }}</h1>
+    <div style="width: 100%; height: 500px;"> <!-- Définissez la hauteur désirée ici -->
+        <canvas id="expenseChart"></canvas>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <script>
+    // Récupérer les données des dépenses et les labels depuis le contrôleur
+    const subCategoriesData = {{ subCategoriesData|json_encode|raw }};
+    const labels1 = [];
+    const expenses = [];
+    const budgetLimits = [];
+
+    // Parcourir les données pour extraire les noms de sous-catégories et les montants dépensés
+    subCategoriesData.forEach(function(item) {
+        labels1.push(item.subCategoryName);
+        expenses.push(item.subCategoryExpense);
+        budgetLimits.push(item.categoryBudgetLimit);
+    });
+
+    // Créer un graphique à barres avec Chart.js
+    const ctx = document.getElementById('expenseChart').getContext('2d');
+    const expenseChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels1,
+            datasets: [{
+                label: 'Dépenses par sous-catégorie',
+                data: expenses,
+                backgroundColor: 'rgba(255, 99, 132, 0.6)', // Couleur de fond des barres pour les dépenses
+                borderColor: 'rgba(255, 99, 132, 1)', // Couleur de bordure des barres pour les dépenses
+                borderWidth: 1
+            },
+            {
+                label: 'Limites de budget',
+                data: budgetLimits,
+                backgroundColor: 'rgba(54, 162, 235, 0.6)', // Couleur de fond des barres pour les limites de budget
+                borderColor: 'rgba(54, 162, 235, 1)', // Couleur de bordure des barres pour les limites de budget
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+
+{% endblock %}

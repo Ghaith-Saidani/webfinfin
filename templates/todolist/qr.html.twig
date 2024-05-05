@@ -1,0 +1,160 @@
+{% block header %}
+<head>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Your custom CSS if any -->
+    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column; /* Center items vertically */
+        }
+        .tasks-title {
+            font-size: 48px; /* Increase the font size of the title */
+            font-weight: bold;
+            margin-bottom: 20px;
+            animation: slideInDown 1s ease; /* Apply animation to the title */
+        }
+        @keyframes slideInDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        .custom-card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease, transform 0.3s ease; /* Add transition for both box-shadow and transform */
+            position: relative; /* Make the position relative for absolute positioning of the check icon */
+        }
+        .custom-card:hover {
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+        }
+        .custom-card .card-body {
+            padding: 20px;
+            position: relative; /* Make the position relative for absolute positioning of the check icon */
+        }
+        .custom-card h5.card-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-align: center; /* Center the task title */
+        }
+        .custom-card .card-text {
+            color: #6c757d;
+            margin-bottom: 10px;
+        }
+        .custom-card.bg-success {
+            border-left: 5px solid #28a745;
+        }
+        .custom-card.bg-danger {
+            border-left: 5px solid #dc3545;
+        }
+        .custom-card.bg-warning {
+            border-left: 5px solid #ffc107;
+        }
+        .selected {
+            transform: scale(1.5); /* Adjust the scale factor as needed */
+            z-index: 2;
+        }
+        .unselected {
+            opacity: 0.3;
+        }
+        .priority-low {
+            background-color: #d1ecf1; /* Light blue background for low priority */
+        }
+        .priority-medium {
+            background-color: #fff3cd; /* Yellow background for medium priority */
+        }
+        .priority-high {
+            background-color: #f8d7da; /* Light red background for high priority */
+        }
+        .card-animation {
+            animation: fadeInUp 1s ease; /* Apply animation to the cards */
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px); /* Move cards 50px down */
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .check-icon {
+            font-size: 24px;
+            color: green;
+            position: absolute;
+            top: -15px; /* Adjust the position above the card */
+            left: calc(50% - 15px); /* Center horizontally */
+            display: none;
+        }
+    </style>
+</head>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const cards = document.querySelectorAll(".custom-card");
+        cards.forEach(function(card) {
+            card.addEventListener("click", function() {
+                // Toggle the 'selected' class on click
+                card.classList.toggle("selected");
+                card.classList.toggle("card-animation"); // Toggle animation class
+                // Toggle the 'unselected' class on other cards
+                cards.forEach(function(c) {
+                    if (c !== card) {
+                        c.classList.toggle("unselected");
+                        c.classList.remove("card-animation"); // Remove animation class from other cards
+                    }
+                });
+                
+                // Toggle check icon for 'Done' status
+                const status = card.querySelector(".card-text.status").textContent.trim();
+                const checkIcon = card.querySelector(".check-icon");
+                if (status === 'Done') {
+                    checkIcon.style.display = 'block';
+                } else {
+                    checkIcon.style.display = 'none';
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="tasks-title">Your Tasks</div> <!-- Title displayed above the cards -->
+    <div class="row">
+        {% for task in tasks %}
+        <div class="col-md-4 mb-4">
+            <div class="card custom-card {% if task.priority == 'low' %}priority-low{% elseif task.priority == 'medium' %}priority-medium{% else %}priority-high{% endif %} bg-{{ task.statustask|lower }}">
+                <div class="check-icon material-icons">done</div> <!-- Check icon -->
+                <div class="card-body">
+                    <h5 class="card-title">{{ task.descriptiontask }}</h5>
+                    <p class="card-text amount">Amount to Pay: {{ task.mtapayer }}</p>
+                    <p class="card-text priority">Priority: {{ task.priority }}</p>
+                    <p class="card-text due-date">Due Date: {{ task.duedate }}</p>
+                    <p class="card-text status">Status: {{ task.statustask }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

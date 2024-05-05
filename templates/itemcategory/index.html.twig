@@ -1,0 +1,95 @@
+{% block content %}
+
+ <div id="itemcategories" class="col-xl-12"  style="margin-top: 30px;">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Item Categories</h4>
+        </div>
+        <div class="card-body" id="itemcategories-container">
+            <div class="category-type">
+                <ul>
+                    {% for itemcategory in itemcategories %}
+                    <li>
+                        <div class="left-category">
+                            <span class="category-icon"><i class="bg-purple-500 fi fi-rr-usd-circle"></i> {{ itemcategory.nameitemcategory }}</span>
+                        </div>
+                        <div class="right-category">
+                                <span><a href="{{ path('app_itemcategory_edit', {'iditemcategory': itemcategory.iditemcategory}) }}" style="color:inherit; text-decoration:none;"><i class="fi fi-rs-pencil"></i></a></span>
+                                <span><a href="{{ path('app_itemcategory_show', {'iditemcategory': itemcategory.iditemcategory}) }}" style="color:inherit; text-decoration:none;"><i class="fi fi-rr-eye"></i></a></span>
+                                <span>{{ include('itemcategory/_delete_form.html.twig', { 'itemcategory': itemcategory }) }}</span>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+                
+                
+                
+            </div>
+            {% block pagination %}
+                    {% if itemcategories is defined and itemcategories is not empty %}
+                        <div class="pagination justify-content-center" id="pagination">
+                            <ul class="pagination">
+                                {% if itemcategories.currentPageNumber > 1 %}
+                                    <li class="page-item"><a class="page-link" href="{{ path(app.request.attributes.get('_route'), app.request.query|merge({ 'page': itemcategories.currentPageNumber - 1 })) }}">&laquo;</a></li>
+                                {% else %}
+                                    <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
+                                {% endif %}
+
+                                {% for page in 1..itemcategories.pageCount %}
+                                    {% if page != itemcategories.currentPageNumber %}
+                                        <li class="page-item"><a class="page-link" href="{{ path(app.request.attributes.get('_route'), app.request.query|merge({ 'page': page })) }}">{{ page }}</a></li>
+                                    {% else %}
+                                        <li class="page-item active"><span class="page-link">{{ page }}</span></li>
+                                    {% endif %}
+                                {% endfor %}
+
+                                {% if itemcategories.currentPageNumber < itemcategories.pageCount %}
+                                    <li class="page-item"><a class="page-link" href="{{ path(app.request.attributes.get('_route'), app.request.query|merge({ 'page': itemcategories.currentPageNumber + 1 })) }}">&raquo;</a></li>
+                                {% else %}
+                                    <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                {% endblock %}
+        </div>
+    </div>
+    <div class="add-goals-link">
+         <h5 class="mb-0">Add new category</h5>
+         <a href="{{ path('app_itemcategory_new') }}">
+             <i class="fi fi-rr-square-plus"></i>
+         </a>
+    </div>
+</div>  
+
+
+
+
+
+<script>
+        $(document).ready(function(){
+        // Ajax pagination
+        $(document).on('click', '#pagination a', function (e) {
+            e.preventDefault();
+
+            // Check if the clicked link is the currently selected page
+            if (!$(this).parent().hasClass('active')) {
+                var page = $(this).attr('href').split('page=')[1];
+                fetchItemCategories(page);
+            }
+        });
+
+        function fetchItemCategories(page) {
+            $.ajax({
+                url: '{{ path('app_wishlist_index') }}?page=' + page,
+                type: 'GET',
+                success: function(data) {
+                    $('#itemcategories').html(data);
+                }
+            });
+        }
+    });
+    </script>
+
+
+{% endblock %}

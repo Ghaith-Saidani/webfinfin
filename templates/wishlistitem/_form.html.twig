@@ -1,0 +1,50 @@
+{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+<div class="card-body">
+        <div class="form-group"> <!-- Container for form elements -->
+            <div class="mb-3"> <!-- Wrapper for form label -->
+                {{ form_label(form.namewishlistitem, 'Name', {'label_attr': {'class': 'form-label'}}) }}
+            </div>
+            <div class="mb-3"> <!-- Wrapper for form widget and errors -->
+                {{ form_widget(form.namewishlistitem, {'attr': {'class': 'form-control form-text'}}) }}
+                {{ form_errors(form.namewishlistitem, {'attr': {'class': 'form-text'}}) }}
+            </div>
+            <div class="mb-3"> <!-- Wrapper for form label -->
+                {{ form_label(form.price, 'Price', {'label_attr': {'class': 'form-label'}}) }}
+            </div>
+            <div class="mb-3"> <!-- Wrapper for form widget and errors -->
+                {{ form_widget(form.price, {'attr': {'class': 'form-control form-text'}}) }}
+                {{ form_errors(form.price, {'attr': {'class': 'form-text'}}) }}
+            </div>
+            <div class="mb-3"> <!-- Wrapper for form label -->
+                {{ form_label(form.priority, 'Priority', {'label_attr': {'class': 'form-label'}}) }}
+            </div>
+            <div class="mb-3"> <!-- Wrapper for form widget and errors -->
+                {{ form_widget(form.priority, {'attr': {'class': 'form-control form-text'}}) }}
+                {{ form_errors(form.priority, {'attr': {'class': 'form-text'}}) }}
+            </div>
+            <div class="mb-3"> <!-- Wrapper for form label -->
+                {{ form_label(form.idwishlist, 'Wishlist', {'label_attr': {'class': 'form-label'}}) }}
+            </div>
+            <div class="mb-3"> <!-- Wrapper for form widget and errors -->
+                {{ form_widget(form.idwishlist, {'attr': {'class': 'form-control form-select'}}) }}
+                {{ form_errors(form.idwishlist, {'attr': {'class': 'form-text'}}) }}
+            </div>
+            <div class="mb-3"> <!-- Wrapper for form label -->
+                {{ form_label(form.status, 'Status', {'label_attr': {'class': 'form-label'}}) }}
+            </div>
+            <div class="mb-3"> <!-- Wrapper for form widget and errors -->
+                {{ form_widget(form.status, {'attr': {'class': 'form-control form-select'}}) }}
+                {{ form_errors(form.status, {'attr': {'class': 'form-text'}}) }}
+            </div>
+            <div class="mb-3"> <!-- Wrapper for form label -->
+                {{ form_label(form.iditemcategory, 'Category', {'label_attr': {'class': 'form-label'}}) }}
+            </div>
+            <div class="mb-3"> <!-- Wrapper for form widget and errors -->
+                {{ form_widget(form.iditemcategory, {'attr': {'class': 'form-control form-select'}}) }}
+                {{ form_errors(form.iditemcategory, {'attr': {'class': 'form-text'}}) }}
+            </div>
+
+            <button type="submit" class="btn btn-success w-100">{{ button_label|default('Save') }}</button>
+        </div>
+</div>
+{{ form_end(form) }}

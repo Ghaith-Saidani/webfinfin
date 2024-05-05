@@ -1,0 +1,221 @@
+{% extends 'base2.html.twig' %}
+
+{% block title %}Todolist{% endblock %}
+
+
+{% block body %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .progress {
+            cursor: pointer; /* Change cursor to pointer on hover */
+        }
+
+        .progress-bar.low {
+            background-color: #ff0000; /* Red color for low progress */
+        }
+
+        .progress-bar.medium {
+            background-color: #ffa500; /* Orange color for medium progress */
+        }
+
+        .progress-bar.high {
+            background-color: #008000; /* Green color for high progress */
+        }
+
+        .table {
+            width: 80%; /* Adjusted width for the table */
+            margin: auto; /* Center align the table */
+            border-collapse: collapse; /* Collapse borders for a cleaner look */
+            border: 1px solid #dee2e6; /* Add border to the table */
+            border-radius: 8px; /* Rounded corners for the table */
+            color: #212529; /* Dark color for text */
+        }
+
+        .table th,
+        .table td {
+            border: 1px solid #dee2e6; /* Add border to table cells */
+            padding: 8px; /* Add padding to table cells */
+            text-align: left; /* Align text to the left */
+        }
+
+        .table th {
+            font-weight: bold; /* Set bold font weight for table headers */
+        }
+
+        .table td {
+            font-weight: normal; /* Set normal font weight for table cells */
+        }
+
+        .chart-container {
+            display: flex;
+            justify-content: space-between;
+            width: 80%;
+            margin: auto;
+            margin-top: 20px;
+        }
+
+        .chart-canvas {
+            width: 60%; /* Adjusted width for smaller size */
+        }
+
+        .chart-cercle {
+            width: 35%; /* Adjusted width for smaller size */
+        }
+
+        .center-buttons {
+            text-align: center; /* Center align the buttons */
+            margin-bottom: 20px; /* Add margin at the bottom */
+        }
+
+        .center-buttons a {
+            margin-right: 10px; /* Add margin between buttons */
+        }
+    </style>
+    <div class="center-buttons">
+        <a href="{{ path('app_todolist_index') }}" class="btn btn-secondary">Back to List</a>
+        <a href="{{ path('app_todolist_edit', {'id': todolist.idtodo}) }}" class="btn btn-primary">Edit</a>
+    </div>
+
+    <h1>Todolist</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Titletodo</th>
+                <td>{{ todolist.titletodo }}</td>
+            </tr>
+            <tr>
+                <th>Statustodo</th>
+                <td>{{ todolist.statustodo }}</td>
+            </tr>
+            <tr>
+                <th>Progress</th>
+                <td>
+                    <div class="progress" title="Click to view progress details" data-todoid="{{ todolist.idtodo }}">
+                        <div class="progress-bar {% if todolist.calculateProgress() < 33 %}low{% elseif todolist.calculateProgress() < 66 %}medium{% else %}high{% endif %}" role="progressbar" style="width: {{ todolist.calculateProgress() }}%;" aria-valuenow="{{ todolist.calculateProgress() }}" aria-valuemin="0" aria-valuemax="100">{{ todolist.calculateProgress() }}%</div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="chart-container">
+        <div class="chart-canvas">
+            <h2>Average Time Between Creation and Due Date</h2>
+            <canvas id="averageTimeChartCanvas" width="300" height="150"></canvas>
+        </div>
+
+        <div class="chart-cercle">
+            <h2>Completed Task Count</h2>
+            <canvas id="completedTaskChartCanvas" width="200" height="150"></canvas>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get the average time and completed task count from PHP
+            var averageTime = {{ averageTime }};
+            var completedTaskCount = {{ completedTaskCount }};
+            var totalTaskCount = {{ totalTaskCount }};
+            
+            // Create the average time chart
+            var avgTimeChartCanvas = document.getElementById('averageTimeChartCanvas').getContext('2d');
+            var avgTimeChart = new Chart(avgTimeChartCanvas, {
+                type: 'bar',
+                data: {
+                    labels: ['Average Time'],
+                    datasets: [{
+                        label: 'Days',
+                        data: [averageTime],
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // Create the completed task count chart
+            var completedTaskChartCanvas = document.getElementById('completedTaskChartCanvas').getContext('2d');
+            var completedTaskChart = new Chart(completedTaskChartCanvas, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Completed', 'Remaining'],
+                    datasets: [{
+                        label: 'Tasks',
+                        data: [completedTaskCount, totalTaskCount - completedTaskCount],
+                        backgroundColor: [
+                            'rgba(54, 162, 235, 0.6)',
+                            'rgba(255, 99, 132, 0.6)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    cutoutPercentage: 50
+                }
+            });
+
+            // Add mouse hover effect to progress bar
+            document.querySelector('.progress').addEventListener('mouseover', function() {
+                var progressBar = document.querySelector('.progress-bar');
+                if (progressBar.classList.contains('low')) {
+                    progressBar.title = 'Low Progress'; // Tooltip for low progress
+                } else if (progressBar.classList.contains('medium')) {
+                    progressBar.title = 'Medium Progress'; // Tooltip for medium progress
+                } else if (progressBar.classList.contains('high')) {
+                    progressBar.title = 'High Progress'; // Tooltip for high progress
+                }
+            });
+        });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    // Add hover functionality to display task duration
+    $('.progress').mouseenter(function() {
+        // Get the corresponding ToDo item's ID from data attribute
+        var todoId = $(this).data('todoid');
+
+        // Send an AJAX request to fetch task information
+        $.ajax({
+            url: '/todolist/fetch_task_info', // Adjust the route URL as needed
+            type: 'POST',
+            data: {
+                idtodo: todoId // Adjust the parameter name to match the controller
+            },
+            success: function(response) {
+                // Check if response contains duration information
+                if (response.duration) {
+                    // Get the progress bar element
+                    var progressBar = $('.progress-bar');
+
+                    // Get the progress value
+                    var progressValue = progressBar.attr('aria-valuenow');
+
+                    // Set tooltip text based on task duration
+                    if (progressValue < 1.0) {
+                        progressBar.attr('title', 'Not started yet');
+                    } else {
+                        progressBar.attr('title', response.duration);
+                    }
+
+                    // Trigger Bootstrap tooltip
+                    progressBar.tooltip('show');
+                }
+            }
+        });
+    });
+});
+</script>
+
+{% endblock %}

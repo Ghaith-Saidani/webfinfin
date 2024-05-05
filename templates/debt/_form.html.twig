@@ -1,0 +1,55 @@
+{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+<div class="card-body">
+    <div class="form-group"> <!-- Container for form elements -->
+        <div class="mb-3"> <!-- Wrapper for form label -->
+            {{ form_label(form.amount, 'Amount', {'label_attr': {'class': 'form-label'}}) }}
+        </div>
+        <div class="mb-3"> <!-- Wrapper for form widget and errors -->
+            {{ form_widget(form.amount, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.amount, {'attr': {'class': 'form-text'}}) }}
+        </div>
+
+        <div class="mb-3"> <!-- Wrapper for form label -->
+            {{ form_label(form.paymentdate, 'Payment Date', {'label_attr': {'class': 'form-label'}}) }}
+        </div>
+        <div class="mb-3"> <!-- Wrapper for form widget and errors -->
+            {{ form_widget(form.paymentdate, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.paymentdate, {'attr': {'class': 'form-text'}}) }}
+        </div>
+
+        <div class="mb-3"> <!-- Wrapper for form label -->
+            {{ form_label(form.amounttopay, 'Amount to Pay', {'label_attr': {'class': 'form-label'}}) }}
+        </div>
+        <div class="mb-3"> <!-- Wrapper for form widget and errors -->
+            {{ form_widget(form.amounttopay, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.amounttopay, {'attr': {'class': 'form-text'}}) }}
+        </div>
+
+        <div class="mb-3"> <!-- Wrapper for form label -->
+            {{ form_label(form.interestrate, 'Interest Rate', {'label_attr': {'class': 'form-label'}}) }}
+        </div>
+        <div class="mb-3"> <!-- Wrapper for form widget and errors -->
+            {{ form_widget(form.interestrate, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.interestrate, {'attr': {'class': 'form-text'}}) }}
+        </div>
+
+        <div class="mb-3"> <!-- Wrapper for form label -->
+            {{ form_label(form.creationdate, 'Creation Date', {'label_attr': {'class': 'form-label'}}) }}
+        </div>
+        <div class="mb-3"> <!-- Wrapper for form widget and errors -->
+            {{ form_widget(form.creationdate, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.creationdate, {'attr': {'class': 'form-text'}}) }}
+        </div>
+
+        <div class="mb-3"> <!-- Wrapper for form label -->
+            {{ form_label(form.type, 'Debt Type', {'label_attr': {'class': 'form-label'}}) }}
+        </div>
+        <div class="mb-3"> <!-- Wrapper for form widget and errors -->
+            {{ form_widget(form.type, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.type, {'attr': {'class': 'form-text'}}) }}
+        </div>
+
+        <button type="submit" class="btn btn-success w-100">{{ button_label|default('Save') }}</button>
+    </div>
+</div>
+{{ form_end(form) }}

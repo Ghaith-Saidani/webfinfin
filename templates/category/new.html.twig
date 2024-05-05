@@ -1,0 +1,115 @@
+{% extends 'base.html.twig' %}
+
+
+{% block content %}
+<style>
+  h1 {
+    text-align: center;
+    color: #20d34a;
+  }
+  </style>
+<div class="row">
+                    <div class="col-12">
+                        <div class="page-title">
+                            <div class="row align-items-center justify-content-between">
+                                <div class="col-xl-4">
+                                    <div class="page-title-content">
+                                        <h3>Categories</h3>
+                                        <p class="mb-2">Welcome to PennyWise</p>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="breadcrumbs"><a href="#">Home </a>
+                                        <span><i class="fi fi-rr-angle-small-right"></i></span>
+                                        <a href="{{path('app_budget')}}">Categories</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xxl-12 col-xl-12">
+                        <div class="settings-menu">
+                            <a href="settings.html">Account</a>
+                            <a href="settings-general.html">General</a>
+                            <a href="settings-profile.html">Profile</a>
+                            <a href="settings-bank.html">Add Bank</a>
+                            <a href="settings-security.html">Security</a>
+                            <a href="settings-session.html">Session</a>
+                            <a href="settings-categories.html">Categories</a>
+                            <a href="settings-currencies.html">Currencies</a>
+                            <a href="settings-api.html">Api</a>
+                            <a href="support.html">Support</a>
+                        </div>
+                               <div class="row">
+                            <div class="col-xxl-4 col-xl-4 col-lg-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4 class="card-title">Create a new categories</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="create-new-category">
+                {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+ <form class="row">
+                 {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+                                                <div class="mb-3 col-12">
+
+                  {{ form_label(form.name) }}
+                    {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+                    {% if form_errors(form.name) %}
+                        <div class="alert alert-danger mt-2">
+                            {{ form_errors(form.name) }}
+                        </div>
+                    {% endif %}
+                                                </div>
+                                                                {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+                                                <div class="mb-3 col-12">
+
+                   {{ form_label(form.budgetlimit) }}
+                    {{ form_widget(form.budgetlimit, {'attr': {'class': 'form-control'}}) }}
+                    {% if form_errors(form.budgetlimit) %}
+                        <div class="alert alert-danger mt-2">
+                            {{ form_errors(form.budgetlimit) }}
+                        </div>
+                    {% endif %}
+
+                                                </div>
+                                                                {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+                                                <div class="mb-3 col-6">
+
+                     {{ form_label(form.idwallet) }}
+                    {{ form_widget(form.idwallet, {'attr': {'class': 'form-control'}}) }}
+                    {% if form_errors(form.idwallet) %}
+                        <div class="alert alert-danger mt-2">
+                            {{ form_errors(form.idwallet) }}
+                        </div>
+                    {% endif %}
+
+                                                </div>
+                                           
+                                                <div class="col-12">
+                                                    <button class="btn btn-success w-100">Create new category</button>
+
+                                                </div>
+                                         
+                                                    {{ form_end(form) }}
+   </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                           
+                        </div>
+                    </div>
+                </div>
+{% endblock %}

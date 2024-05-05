@@ -1,0 +1,152 @@
+{% block content %}
+
+<div class="col-xl-12" id="wishlist-items">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Items </h4>
+                </div>
+                <div class="card-body">                
+                    <div class="transaction-table">
+                        <div class="table-responsive">
+                            <table class="table mb-0 table-responsive-sm " id="wishlist-items-table" >
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Price</th>
+                                        <th>Creation date</th>
+                                        <th>Priority</th>
+                                        <th>Status</th>
+                                        <th>Progress</th>
+                                        <th>Management</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for wishlistitem in wishlistItems %}
+                                        <tr>
+
+                                            <td> 
+                                                <span class="table-category-icon"><i class="bg-purple-500 fi fi-sr-star"></i> {{wishlistitem.namewishlistitem}} </span>
+                                            </td>
+                                            <td>{{wishlistitem.price}}  </td>
+                                            <td>
+                                                <span><i class="fi fi-rr-calendar"></i></span>
+                                                <span style="margin-left: 5px;"> </span>
+                                            </td>
+                                            <td> {{wishlistitem.priority}} </td>
+                                            <td> {{wishlistitem.status}} </td>
+                                            <td>
+                                                <div class="progress progress-bar-with-tooltip" style="height: 25px;" 
+                                                title="Estimate Purchase Date: ' + wishlistitem.estimated_purchase_date + '">
+                                                <div class="progress-bar" role="progressbar" style="width: ' + progress + '%;" aria-valuenow="' + progress + '" aria-valuemin="0" aria-valuemax="100">{{wishlistitem.progress}} '%</div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="category-type" style="display: flex; justify-content: right;">
+                                                    <ul>
+                                                        <li>
+                                                            <div class="right-category">
+                                                                <span><a href="/wishlistitem/' + wishlistitem.idwishlistitem + '/edit" style="color:inherit; text-decoration:none;"><i class="fi fi-rs-pencil"></i></a></span>
+                                                                <span class="get-item-info" data-item-id="' + wishlistitem.idwishlistitem + '"><i class="fi fi-rr-eye"></i></span>
+                                                                <span>{{ include('wishlistitem/_delete_form.html.twig', { 'wishlistitem': wishlistitem }) }}</span>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                            </tr>
+                                    {% endfor %}
+                                </tbody>
+                                
+                            </table>
+                            
+
+
+                        
+                        </div>
+
+                        {% block pagination %}
+                    {% if wishlistItems is defined and wishlistItems is not empty %}
+                        <div class="pagination justify-content-center" id="pagination">
+                            <ul class="pagination">
+                                {% if wishlistItems.currentPageNumber > 1 %}
+                                    <li class="page-item"><a class="page-link" href="{{ path(app.request.attributes.get('_route'), app.request.query|merge({ 'page': wishlistItems.currentPageNumber - 1 })) }}">&laquo;</a></li>
+                                {% else %}
+                                    <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
+                                {% endif %}
+
+                                {% for page in 1..wishlistItems.pageCount %}
+                                    {% if page != wishlistItems.currentPageNumber %}
+                                        <li class="page-item"><a class="page-link" href="{{ path(app.request.attributes.get('_route'), app.request.query|merge({ 'page': page })) }}">{{ page }}</a></li>
+                                    {% else %}
+                                        <li class="page-item active"><span class="page-link">{{ page }}</span></li>
+                                    {% endif %}
+                                {% endfor %}
+
+                                {% if wishlistItems.currentPageNumber < wishlistItems.pageCount %}
+                                    <li class="page-item"><a class="page-link" href="{{ path(app.request.attributes.get('_route'), app.request.query|merge({ 'page': wishlistItems.currentPageNumber + 1 })) }}">&raquo;</a></li>
+                                {% else %}
+                                    <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                {% endblock %}
+                    </div>
+                </div>
+                
+
+                
+            </div>
+
+            <div class="add-goals-link">
+                     <h5 class="mb-0" >Add new Item</h5>
+                     <a href="{{ path('app_wishlistitem_new') }}">
+                         <i class="fi fi-rr-square-plus"></i>
+                     </a>
+                </div>
+
+                <!-- Pagination -->
+
+</div> 
+ </div> 
+
+                                    
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+    // Function to sort table rows based on the status column
+    function sortTable() {
+        var table = $('#wishlist-table');
+        var rows = table.find('tr:not(:first-child)').toArray(); // Exclude the first row (header row)
+
+        // Define the priority order
+        var statusOrder = {
+            'IN_PROGRESS': 3,
+            'NOT_STAETED': 2,
+            'DONE': 1
+        };
+
+        rows.sort(function(a, b) {
+            var statusA = $(a).find('td:eq(4)').text().trim(); // Assuming status is in the fifth column (index 4)
+            var statusB = $(b).find('td:eq(4)').text().trim(); // Adjust if status is in a different column
+
+            return (statusOrder[statusB] || 0) - (statusOrder[statusA] || 0); // Sort in descending order
+        });
+
+        $.each(rows, function(index, row) {
+            table.append(row);
+        });
+    }
+    // Replace the word "DONE" with the checkmark icon
+    $('#wishlist-table td').filter(function() {
+        return $(this).text().trim() === 'DONE';
+    }).html('&#10003;');
+
+    // Call the sortTable function when the document is ready
+    sortTable();
+});
+
+</script>
+
+        
+{% endblock %}

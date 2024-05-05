@@ -1,0 +1,39 @@
+{% block title %}Category index{% endblock %}
+
+{% block body %}
+    <h1>Category index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Idcategory</th>
+                <th>Name</th>
+                <th>Budgetlimit</th>
+                <th>Wallet</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for category in categories %}
+            <tr>
+                <td>{{ category.idcategory }}</td>
+                <td>{{ category.name }}</td>
+                <td>{{ category.budgetlimit }}</td>
+                <td>{{ category.idWallet.name }}</td>
+                <td>
+                    <a href="{{ path('app_category_show', {'idcategory': category.idcategory}) }}">show</a>
+                    <a href="{{ path('app_category_edit', {'idcategory': category.idcategory}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {{ knp_pagination_render(categories) }}
+
+    <a href="{{ path('app_category_new') }}">Create new</a>
+{% endblock %}

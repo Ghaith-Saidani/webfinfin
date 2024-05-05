@@ -1,0 +1,192 @@
+
+  <style>
+    a {
+      color: inherit;
+    }
+
+    h1, h2, h3, h4 {
+      margin: 0;
+      margin-bottom: 8px;
+      margin-top: 8px;
+    }
+
+    h1 {
+      font-size: 2em;
+    }
+
+    .menu {
+      filter: url("#goo");
+      position: absolute;
+      left: 50%;
+      margin-left: -120px;
+      padding-top: 8px;
+      padding-left: 120px;
+      width: 240px;
+      height: 160px;
+      box-sizing: border-box;
+      font-size: 12px;
+      text-align: left;
+    }
+
+    .menu-item, .menu-open-button {
+      background: #e91e63;
+      border-radius: 100%;
+      width: 40px;
+      height: 40px;
+      margin-left: -30px;
+      position: absolute;
+      top: 16px;
+      color: white;
+      text-align: center;
+      line-height: 40px;
+      transform: translate3d(0, 0, 0);
+      transition: transform ease-out 200ms;
+    }
+
+    .menu-open {
+      display: none;
+    }
+
+    .hamburger {
+      width: 14px;
+      height: 2px;
+      background: white;
+      display: block;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-left: -7px;
+      margin-top: -1px;
+      transition: transform 200ms;
+    }
+
+    .hamburger-1 {
+      transform: translate3d(0, -6px, 0);
+    }
+
+    .hamburger-2 {
+      transform: translate3d(0, 0, 0);
+    }
+
+    .hamburger-3 {
+      transform: translate3d(0, 6px, 0);
+    }
+
+    .menu-open:checked + .menu-open-button .hamburger-1 {
+      transform: translate3d(0, 0, 0) rotate(45deg);
+    }
+
+    .menu-open:checked + .menu-open-button .hamburger-2 {
+      transform: translate3d(0, 0, 0) scale(0.1, 1);
+    }
+
+    .menu-open:checked + .menu-open-button .hamburger-3 {
+      transform: translate3d(0, 0, 0) rotate(-45deg);
+    }
+
+    .menu-item:hover {
+      background: white;
+      color: #e91e63;
+      outline: 2px solid #e91e63;
+    }
+
+    .menu-item:nth-child(n+3) {
+      transition-duration: 180ms;
+    }
+
+    .menu-open-button {
+      z-index: 2;
+      transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      transition-duration: 300ms;
+      transform: scale(1.1, 1.1) translate3d(0, 0, 0);
+      cursor: pointer;
+    }
+
+    .menu-open-button:hover {
+      transform: scale(1.2, 1.2) translate3d(0, 0, 0);
+    }
+
+    .menu-open:checked + .menu-open-button {
+      transition-timing-function: linear;
+      transition-duration: 150ms;
+      transform: scale(0.8, 0.8) translate3d(0, 0, 0);
+    }
+
+    .menu-open:checked ~ .menu-item {
+      transition-timing-function: cubic-bezier(0.935, 0, 0.34, 1.33);
+    }
+
+    .menu-open:checked ~ .menu-item:nth-child(3) {
+      transition-duration: 180ms;
+      transform: translate3d(0.06px, -80px, 0);
+    }
+
+    .menu-open:checked ~ .menu-item:nth-child(4) {
+      transition-duration: 280ms;
+      transform: translate3d(69px, -40px, 0);
+    }
+
+    .menu-open:checked ~ .menu-item:nth-child(5) {
+      transition-duration: 380ms;
+      transform: translate3d(69px, 40px, 0);
+    }
+
+    .menu-open:checked ~ .menu-item:nth-child(6) {
+      transition-duration: 480ms;
+      transform: translate3d(0.06px, 80px, 0);
+    }
+
+    .menu-open:checked ~ .menu-item:nth-child(7) {
+      transition-duration: 580ms;
+      transform: translate3d(-69px, 40px, 0);
+    }
+
+    .menu-open:checked ~ .menu-item:nth-child(8) {
+      transition-duration: 680ms;
+      transform: translate3d(-69px, -40px, 0);
+    }
+
+    .menu-open:checked ~ .menu-item:nth-child(9) {
+      transition-duration: 780ms;
+      transform: translate3d(-0.15px, -80px, 0);
+    }
+  </style>
+  {% block body %}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+  <nav class="menu">
+    <input type="checkbox" href="#" class="menu-open" name="menu-open" id="menu-open"/>
+    <label class="menu-open-button" for="menu-open">
+      <span class="hamburger hamburger-1"></span>
+      <span class="hamburger hamburger-2"></span>
+      <span class="hamburger hamburger-3"></span>
+    </label>
+    
+    <a href="{{ path('app_wishlistitem_show', {'idwishlistitem': wishlistitem.idwishlistitem}) }}" class="menu-item"> <i class="fa fa-eye"></i> </a>
+    <a href="{{ path('app_wishlistitem_edit', {'idwishlistitem': wishlistitem.idwishlistitem}) }}" class="menu-item"> <i class="fa fa-edit"></i> </a>
+    {{ include('wishlistitem/_delete_form.html.twig') }}
+
+  </nav>
+
+  <!-- filters -->
+  <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+      <defs>
+        <filter id="shadowed-goo">
+            <feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="7" />
+            <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0   0 0 1 0 0  0 0 0 18 -5" result="goo" />
+            <feGaussianBlur in="goo" stdDeviation="2" result="shadow" />
+            <feColorMatrix in="shadow" mode="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.8 -0.2" result="shadow" />
+            <feOffset in="shadow" dx="0.5" dy="0.5" result="shadow" />
+            <feComposite in2="shadow" in="goo" result="goo" />
+            <feComposite in2="goo" in="SourceGraphic" result="mix" />
+        </filter>
+        <filter id="goo">
+            <feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="7" />
+            <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0   0 0 1 0 0  0 0 0 18 -5" result="goo" />
+            <feComposite in2="goo" in="SourceGraphic" result="mix" />
+        </filter>
+      </defs>
+  </svg>
+
+  {% endblock %}
+

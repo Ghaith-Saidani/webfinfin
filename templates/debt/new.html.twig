@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Debt{% endblock %}
+
+{% block content %}
+
+<div class="content-body">
+    <div class="verification section-padding">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Create a New Debt</h4>
+                        </div>
+                        <div class="card-body">
+                            {{ include('debt/_form.html.twig') }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card-footer">
+    <a href="{{ path('app_debt_index') }}" class="btn btn-secondary">Back to List</a>
+</div>
+
+{% endblock %}

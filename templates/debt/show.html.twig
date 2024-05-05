@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Debt{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">Debt Details</h5>
+                    </div>
+                    <div class="card-body">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <th>Debt ID</th>
+                                    <td>{{ debt.iddebt }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Amount</th>
+                                    <td>{{ debt.amount }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Payment Date</th>
+                                    <td>{{ debt.paymentdate ? debt.paymentdate|date('Y-m-d') : '' }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Amount to Pay</th>
+                                    <td style="color: red;">{{ debt.amounttopay }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Interest Rate</th>
+                                    <td>{{ debt.interestrate }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Creation Date</th>
+                                    <td>{{ debt.creationdate ? debt.creationdate|date('Y-m-d') : '' }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Type</th>
+                                    <td>{{ debt.type }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-body">
+                        <form action="{{ path('deposit_page', {'iddebt': debt.iddebt}) }}" method="POST">
+                            <div class="form-group">
+                                <label for="depositAmount">Deposit Amount:</label>
+                                <input type="number" class="form-control" id="depositAmount" name="amount" placeholder="Enter amount to deposit">
+                            </div>
+                            {% if errors %}
+                                <ul class="list-unstyled">
+                                    {% for error in errors %}
+                                        <li class="text-danger">{{ error }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                            <button type="submit" class="btn btn-primary btn-block mt-3">Deposit</button>
+                        </form>
+                    </div>
+                </div>
+                    <div class="card-footer mt-3">
+                        <a href="{{ path('app_debt_index') }}" class="btn btn-secondary">Back to List</a>
+                    </div>
+            </div>
+        </div>
+    </div>
+    
+{% endblock %}

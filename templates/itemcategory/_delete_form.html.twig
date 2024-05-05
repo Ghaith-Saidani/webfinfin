@@ -1,0 +1,43 @@
+<form id="delete-form-{{ itemcategory.iditemcategory }}" method="post" action="{{ path('app_itemcategory_delete', {'iditemcategory': itemcategory.iditemcategory}) }}">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ itemcategory.iditemcategory) }}">
+    <a href="#" class="delete-item-link" style="color: inherit; text-decoration: none;"><i class="fi fi-rr-trash"></i></a>
+</form>
+
+<!-- Include jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('.delete-item-link').click(function(event) {
+            event.preventDefault(); // Prevent default action (i.e., following the link)
+
+            var formId = $(this).closest('form').attr('id');
+            var url = $('#' + formId).attr('action');
+            var formData = $('#' + formId).serialize();
+
+            // Unbind the click event handler to prevent multiple clicks
+            $(this).off('click');
+
+            if (confirm('Are you sure you want to delete this item?')) {
+                $.ajax({
+                    url: url,
+                    method: 'POST',
+                    data: formData,
+                    success: function(response) {
+                        // Handle success response (e.g., remove item from UI)
+                        console.log('category item deleted successfully');
+                        $('#' + formId).closest('li').remove(); // Remove deleted item from UI
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle error response
+                        console.error('Error deleting wishlist item:', error);
+                    }
+                });
+            }
+        });
+    });
+</script>
+
+
+
+

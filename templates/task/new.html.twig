@@ -1,0 +1,67 @@
+{% extends 'base2.html.twig' %}
+
+{% block title %}New Task{% endblock %}
+{% block body %}
+{% block content %}
+    <h1>Create new Task</h1>
+
+    {{ include('task/_form.html.twig') }}
+
+    <a href="{{ path('app_task_index') }}" class="btn btn-secondary mt-3">Back to list</a>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    console.log('jQuery loaded and document ready');
+
+    // Attach change event listener to the subcategory dropdown
+    $('#task_idsubcategory').on('change', function() {
+        console.log('Subcategory changed');
+        
+        // Get the selected subcategory ID
+        var subcategoryId = $(this).val();
+        console.log('Selected subcategory ID:', subcategoryId);
+
+        // Make an AJAX request if a subcategory is selected
+        if (subcategoryId) {
+            // Construct the URL for the AJAX request
+            var url = '{{ path("get_mtassigne", {"id": "SUBCATEGORY_ID"}) }}'.replace('SUBCATEGORY_ID', subcategoryId);
+
+            console.log('Generated URL:', url);
+
+            // Perform the AJAX request
+            $.ajax({
+                url: url,
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    console.log('Received data:', data);
+                    
+                    // Check if 'mtAssigne' is present in the response data
+                    if (data && data.mtAssigne !== undefined) {
+                        // Update the 'task_mtAssigne' field with the fetched 'mtAssigne' value
+                        $('#task_mtAssigne').val(data.mtAssigne);
+                        
+                        // Update the 'task_mtapayer' field with the fetched 'mtAssigne' value
+                        $('#task_mtapayer').val(data.mtAssigne);
+                    } else {
+                        console.error('mtAssigne not found in response');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching mtAssigne:', error);
+                    console.error('Status:', status);
+                    console.error('XHR:', xhr);
+                }
+            });
+        } else {
+            // Clear the 'task_mtAssigne' and 'task_mtapayer' fields if no subcategory is selected
+            $('#task_mtAssigne').val('');
+            $('#task_mtapayer').val('');
+        }
+    });
+});
+
+</script>
+{% endblock %}
+{% endblock %}

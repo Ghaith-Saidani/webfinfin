@@ -1,0 +1,529 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accounts page : PennyWise{% endblock %}
+{% block content  %}
+	<div class="row">
+		<div class="col-12">
+			<div class="page-title">
+				<div class="row align-items-center justify-content-between">
+					<div class="col-xl-4">
+						<div class="page-title-content">
+							<h3>Accounts</h3>
+							<p class="mb-2">Welcome to PennyWise for Finance Management</p>
+						</div>
+					</div>
+					<div class="col-auto">
+						<div class="breadcrumbs">
+							<a href="#">Home
+							</a>
+							<span>
+								<i class="fi fi-rr-angle-small-right"></i>
+							</span>
+							<a href="{{ path('app_transaction') }}">Transactions</a>
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="wallet-tab">
+		<div class="row g-0">
+			<div class="col-xl-3">
+				<div class="nav d-block">
+					{% for account in accounts %}
+						<div class="col-xl-12 col-md-6">
+							<div class="wallet-nav" data-bs-toggle="pill" data-bs-target="#{{ account.idaccount }}" onclick="selectAccount({{ account.idaccount }}, '{{ account.nameaccount }}', '{{ account.idwallet.getCurrencySymbol() }}', {{ account.balance }})">
+								<div class="wallet-nav-icon">
+									<span>
+										<span>
+											<i class="{{ account.getIcon() }}"></i>
+										</span>
+									</span>
+								</div>
+								<div class="wallet-nav-text">
+									<h3>{{ account.nameaccount }}</h3>
+									<p class="text-success">
+										{{ account.idwallet.getCurrencySymbol() }}{{ '%.2f'|format(account.balance) }}</p>
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+				<div class="add-card-link">
+					<h5 class="mb-0">Add new account</h5>
+					<a href="{{ path('account_add') }}">
+						<i class="fi fi-rr-square-plus"></i>
+					</a>
+				</div>
+				<br>
+				<div class="add-card-link">
+					<h5 class="mb-0">Manage accounts</h5>
+					<a href="{{ path('account_manager') }}">
+						<i class="fi fi-br-edit-alt"></i>
+					</a>
+				</div>
+			</div>
+			<div class="col-xl-9">
+				<div class="tab-content wallet-tab-content">
+					<div class="tab-pane show active" id="a1">
+						<div class="wallet-tab-title" id="accountName">
+							<h3>{{ defaultBankName }}</h3>
+						</div>
+						<div class="row">
+							<div class="col-xxl-6 col-xl-6 col-lg-6">
+								<div class="card">
+									<div class="card-body">
+										<div class="wallet-total-balance">
+											<p class="mb-0">Total Balance of Wallet</p>
+											<h2>{{ accounts[0].idwallet.getCurrencySymbol() }}{{ '%.2f'|format(accounts[0].idwallet.totalbalance) }}</h2>
+										</div>
+										<div class="funds-credit">
+											<p class="mb-0">Personal Funds</p>
+											<h5>$32,500.28</h5>
+										</div>
+										<div class="funds-credit">
+											<p class="mb-0">Credit Limits</p>
+											<h5>$2500.00</h5>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-xxl-6 col-xl-6 col-lg-6">
+								<div class="credit-card visa">
+									<div class="type-brand">
+										<h4>Debit Card</h4>
+										<img src="images/cc/visa.png" alt="">
+									</div>
+									<div class="cc-number">
+										<h6>1234</h6>
+										<h6>5678</h6>
+										<h6>7890</h6>
+										<h6>9875</h6>
+									</div>
+									<div class="cc-holder-exp">
+										<h5>Saiful Islam</h5>
+										<div class="exp">
+											<span>EXP:</span>
+											<strong>12/21</strong>
+										</div>
+									</div>
+									<div class="cc-info">
+										<div class="row justify-content-between align-items-center">
+											<div class="col-5">
+												<div class="d-flex">
+													<p class="me-3">Status</p>
+													<p>
+														<strong>Active</strong>
+													</p>
+												</div>
+												<div class="d-flex">
+													<p class="me-3">Currency</p>
+													<p>
+														<strong>USD</strong>
+													</p>
+												</div>
+											</div>
+											<div class="col-xl-7">
+												<div class="d-flex justify-content-between">
+													<div class="ms-3">
+														<p>Credit Limit</p>
+														<p>
+															<strong>2000 USD</strong>
+														</p>
+													</div>
+													<div id="circle3"></div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+								<div class="stat-widget-1">
+									<p id="bankNamePlaceholder" class="mb-0">{{defaultBankName}}</p>
+									<h3 id="accountBalance"></h3>
+									<p>
+										<span class="text-success">
+											<i class="fi fi-rr-arrow-trend-up"></i>2.47%</span>
+										Last month
+										<strong>$24,478</strong>
+									</p>
+								</div>
+							</div>
+							<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+								<div class="stat-widget-1">
+									<h6>Monthly Expenses</h6>
+									<h3>$ 432568</h3>
+									<p>
+										<span class="text-success">
+											<i class="fi fi-rr-arrow-trend-up"></i>2.47%</span>
+										Last month
+										<strong>$24,478</strong>
+									</p>
+								</div>
+							</div>
+							<div class="col-xxl-12">
+								<div class="card">
+									<div class="card-header">
+										<h4 class="card-title">Balance Overtime</h4>
+									</div>
+									<div class="card-body">
+										<div class="chartjs-size-monitor">
+											<div class="chartjs-size-monitor-expand">
+												<div class=""></div>
+											</div>
+											<div class="chartjs-size-monitor-shrink">
+												<div class=""></div>
+											</div>
+										</div>
+										<canvas id="chartjsBalanceOvertime"></canvas>
+									</div>
+								</div>
+							</div>
+							<div class="col-xl-12">
+								<div class="card">
+									<div class="card-header">
+										<h4 class="card-title">Transaction History</h4>
+									</div>
+									<div class="card-body">
+										<div class="transaction-table">
+											<div class="table-responsive">
+												<table class="table mb-0 table-responsive-sm">
+													<thead>
+														<tr>
+															<th>Category</th>
+															<th>Date</th>
+															<th>Description</th>
+															<th>Type</th>
+															<th>Amount</th>
+															
+														</tr>
+													</thead>
+													<tbody>
+														
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="tab-pane" id="a2">
+						<div class="wallet-tab-title">
+							<h3>Debit Card</h3>
+						</div>
+						<div class="row">
+							<div class="col-xxl-6 col-xl-6 col-lg-6">
+								<div class="card">
+									<div class="card-body">
+										<div class="wallet-total-balance">
+											<p class="mb-0">Total Balance</p>
+											<h2>$221,478</h2>
+										</div>
+										<div class="funds-credit">
+											<p class="mb-0">Personal Funds</p>
+											<h5>$32,500.28</h5>
+										</div>
+										<div class="funds-credit">
+											<p class="mb-0">Credit Limits</p>
+											<h5>$2500.00</h5>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-xxl-6 col-xl-6 col-lg-6">
+								<div class="credit-card visa">
+									<div class="type-brand">
+										<h4>Debit Card</h4>
+										<img src="images/cc/visa.png" alt="">
+									</div>
+									<div class="cc-number">
+										<h6>1234</h6>
+										<h6>5678</h6>
+										<h6>7890</h6>
+										<h6>9875</h6>
+									</div>
+									<div class="cc-holder-exp">
+										<h5>Saiful Islam</h5>
+										<div class="exp">
+											<span>EXP:</span>
+											<strong>12/21</strong>
+										</div>
+									</div>
+									<div class="cc-info">
+										<div class="row justify-content-between align-items-center">
+											<div class="col-5">
+												<div class="d-flex">
+													<p class="me-3">Status</p>
+													<p>
+														<strong>Active</strong>
+													</p>
+												</div>
+												<div class="d-flex">
+													<p class="me-3">Currency</p>
+													<p>
+														<strong>USD</strong>
+													</p>
+												</div>
+											</div>
+											<div class="col-xl-7">
+												<div class="d-flex justify-content-between">
+													<div class="ms-3">
+														<p>Credit Limit</p>
+														<p>
+															<strong>2000 USD</strong>
+														</p>
+													</div>
+													<div id="circle4"></div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+								<div class="stat-widget-1">
+									<h6>Total Balance</h6>
+									<h3>$ 432568</h3>
+									<p>
+										<span class="text-success">
+											<i class="fi fi-rr-arrow-trend-up"></i>2.47%</span>
+										Last month
+										<strong>$24,478</strong>
+									</p>
+								</div>
+							</div>
+							<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+								<div class="stat-widget-1">
+									<h6>Monthly Expenses</h6>
+									<h3>$ 432568</h3>
+									<p>
+										<span class="text-success">
+											<i class="fi fi-rr-arrow-trend-up"></i>2.47%</span>
+										Last month
+										<strong>$24,478</strong>
+									</p>
+								</div>
+							</div>
+							
+							
+						</div>
+					</div>
+					<div class="tab-pane" id="a3">
+						<div class="wallet-tab-title">
+							<h3>Visa Card</h3>
+						</div>
+						<div class="row">
+							<div class="col-xxl-6 col-xl-6 col-lg-6">
+								<div class="card">
+									<div class="card-body">
+										<div class="wallet-total-balance">
+											<p class="mb-0">Total Balance</p>
+											<h2>$221,478</h2>
+										</div>
+										<div class="funds-credit">
+											<p class="mb-0">Personal Funds</p>
+											<h5>$32,500.28</h5>
+										</div>
+										<div class="funds-credit">
+											<p class="mb-0">Credit Limits</p>
+											<h5>$2500.00</h5>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-xxl-6 col-xl-6 col-lg-6">
+								<div class="credit-card visa">
+									<div class="type-brand">
+										<h4>Debit Card</h4>
+										<img src="images/cc/visa.png" alt="">
+									</div>
+									<div class="cc-number">
+										<h6>1234</h6>
+										<h6>5678</h6>
+										<h6>7890</h6>
+										<h6>9875</h6>
+									</div>
+									<div class="cc-holder-exp">
+										<h5>Saiful Islam</h5>
+										<div class="exp">
+											<span>EXP:</span>
+											<strong>12/21</strong>
+										</div>
+									</div>
+									<div class="cc-info">
+										<div class="row justify-content-between align-items-center">
+											<div class="col-5">
+												<div class="d-flex">
+													<p class="me-3">Status</p>
+													<p>
+														<strong>Active</strong>
+													</p>
+												</div>
+												<div class="d-flex">
+													<p class="me-3">Currency</p>
+													<p>
+														<strong>USD</strong>
+													</p>
+												</div>
+											</div>
+											<div class="col-xl-7">
+												<div class="d-flex justify-content-between">
+													<div class="ms-3">
+														<p>Credit Limit</p>
+														<p>
+															<strong>2000 USD</strong>
+														</p>
+													</div>
+													<div id="circle5"></div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+								<div class="stat-widget-1">
+									<h6>Total Balance</h6>
+									<h3>$ 432568</h3>
+									<p>
+										<span class="text-success">
+											<i class="fi fi-rr-arrow-trend-up"></i>2.47%</span>
+										Last month
+										<strong>$24,478</strong>
+									</p>
+								</div>
+							</div>
+							<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+								<div class="stat-widget-1">
+									<h6>Monthly Expenses</h6>
+									<h3>$ 432568</h3>
+									<p>
+										<span class="text-success">
+											<i class="fi fi-rr-arrow-trend-up"></i>2.47%</span>
+										Last month
+										<strong>$24,478</strong>
+									</p>
+								</div>
+							</div>
+							
+							
+						</div>
+					</div>
+					<div class="tab-pane" id="a4">
+						<div class="wallet-tab-title">
+							<h3>Cash</h3>
+						</div>
+						<div class="row">
+							<div class="col-xxl-6 col-xl-6 col-lg-6">
+								<div class="card">
+									<div class="card-body">
+										<div class="wallet-total-balance">
+											<p class="mb-0">Total Balance</p>
+											<h2>$221,478</h2>
+										</div>
+										<div class="funds-credit">
+											<p class="mb-0">Personal Funds</p>
+											<h5>$32,500.28</h5>
+										</div>
+										<div class="funds-credit">
+											<p class="mb-0">Credit Limits</p>
+											<h5>$2500.00</h5>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-xxl-6 col-xl-6 col-lg-6">
+								<div class="credit-card visa">
+									<div class="type-brand">
+										<h4>Debit Card</h4>
+										<img src="images/cc/visa.png" alt="">
+									</div>
+									<div class="cc-number">
+										<h6>1234</h6>
+										<h6>5678</h6>
+										<h6>7890</h6>
+										<h6>9875</h6>
+									</div>
+									<div class="cc-holder-exp">
+										<h5>Saiful Islam</h5>
+										<div class="exp">
+											<span>EXP:</span>
+											<strong>12/21</strong>
+										</div>
+									</div>
+									<div class="cc-info">
+										<div class="row justify-content-between align-items-center">
+											<div class="col-5">
+												<div class="d-flex">
+													<p class="me-3">Status</p>
+													<p>
+														<strong>Active</strong>
+													</p>
+												</div>
+												<div class="d-flex">
+													<p class="me-3">Currency</p>
+													<p>
+														<strong>USD</strong>
+													</p>
+												</div>
+											</div>
+											<div class="col-xl-7">
+												<div class="d-flex justify-content-between">
+													<div class="ms-3">
+														<p>Credit Limit</p>
+														<p>
+															<strong>2000 USD</strong>
+														</p>
+													</div>
+													<div id="circle2"></div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+								<div class="stat-widget-1">
+									<h6>Total Balance</h6>
+									<h3>$ 432568</h3>
+									<p>
+										<span class="text-success">
+											<i class="fi fi-rr-arrow-trend-up"></i>2.47%</span>
+										Last month
+										<strong>$24,478</strong>
+									</p>
+								</div>
+							</div>
+							<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+								<div class="stat-widget-1">
+									<h6>Monthly Expenses</h6>
+									<h3>$ 432568</h3>
+									<p>
+										<span class="text-success">
+											<i class="fi fi-rr-arrow-trend-up"></i>2.47%</span>
+										Last month
+										<strong>$24,478</strong>
+									</p>
+								</div>
+							</div>
+							<div class="col-xxl-12">
+								<div class="card">
+									<div class="card-header">
+										<h4 class="card-title">Balance Overtime</h4>
+									</div>
+									
+								</div>
+							</div>
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

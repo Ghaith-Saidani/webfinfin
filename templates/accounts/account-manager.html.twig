@@ -1,0 +1,183 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accounts page : PennyWise
+{% endblock %}
+{% block content  %}
+
+	<div class="row">
+		<div class="col-12">
+			<div class="page-title">
+				<div class="row align-items-center justify-content-between">
+					<div class="col-xl-4">
+						<div class="page-title-content">
+							<h3>Accounts
+							</h3>
+							<p class="mb-2">Welcome to Pennywise : Finance Management</p>
+						</div>
+					</div>
+					<div class="col-auto">
+						<div class="breadcrumbs">
+							<a href="#">Home
+							</a>
+							<span>
+								<i class="fi fi-rr-angle-small-right"></i>
+							</span>
+							<a href="#">Bank</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xxl-12 col-xl-12">
+			<div class="settings-menu">
+				<a href="settings.html">Account</a>
+				<a href="settings-general.html">General</a>
+				<a href="settings-profile.html">Profile</a>
+				<a href="settings-bank.html">Add Bank</a>
+
+			</div>
+			<div style=" margin-bottom: 20px; margin-right: 10px;">
+				<div
+					class="search" style="margin-right: 20px;">
+					<!-- Adjust margin-right for spacing -->
+					<form action="{{ path('account_manager') }}" method="GET">
+                <div class="input-group" style="width: 300px;">
+                    <input type="text" class="form-control" name="search" placeholder="Search Accounts...">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fi fi-br-search"></i>
+                    </button>
+                </div>
+            </form>
+				</div>
+			</div>
+
+			<div class="card">
+				<div class="card-header">
+					<h4 class="card-title">Manage accounts</h4>
+					<div>
+						Wallet Balance :
+						<h4 class="text-success">{{ accounts[0].idwallet.getCurrencySymbol() }}{{  '%.2f'|format(accounts[0].idwallet.totalbalance) }}</h4>
+					</div>
+
+				</div>
+
+				<div class="card-body">
+
+					{% for account in accounts %}
+						<div class="verify-content">
+							<div class="d-flex align-items-center">
+								<span class="me-3 icon-circle bg-primary text-white">
+									<i class="{{ account.getIcon() }}"></i>
+								</span>
+								<div class="primary-number">
+									<h5 class="mb-0">{{ account.nameaccount }}</h5>
+									<small>type :
+										{{ account.typeaccount }}</small>
+									<br>
+									<span class="text-success">{{ account.idwallet.getCurrencySymbol() }}{{'%.2f'|format( account.balance)}}</span>
+								</div>
+							</div>
+							<div class="primary-number">
+								
+									<span >{{ account.description}}</span>
+								</div>
+
+
+							<div class="account-actions">
+								<a href="{{ path('account_edit', {'id': account.idaccount}) }}">
+									<span>
+										<i class="fi fi-rr-pencil"></i>
+									</span>
+								</a>
+								<span>
+									<i class="fi fi-rr-eye"></i>
+								</span>
+								<span>
+									<i class="fi fi-rr-trash delete-button" data-account-id="{{ account.idaccount }}"></i>
+								</span>
+							</div>
+						</div>
+						<hr class="border opacity-1">
+						{% include 'accounts/delete_account_modal.html.twig' %}
+					{% endfor %}
+
+
+					<div class="mt-5">
+						<a href="{{ path('account_add') }}" class="btn btn-primary m-2">Add Account</a>
+					</div>
+				</div>
+			</div>
+				{# Pagination controls #}
+ {% block pagination %}
+    {% if accounts is defined and accounts is not empty %}
+        <div class="pagination justify-content-center">
+            <ul class="pagination">
+                {% if accounts.currentPageNumber > 1 %}
+                    <li class="page-item"><a class="page-link" href="{{ path(app.request.attributes.get('_route'), app.request.query|merge({ 'page': accounts.currentPageNumber - 1 })) }}">&laquo;</a></li>
+                {% else %}
+                    <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
+                {% endif %}
+
+                {% for page in 1..accounts.pageCount %}
+                    {% if page != accounts.currentPageNumber %}
+                        <li class="page-item"><a class="page-link" href="{{ path(app.request.attributes.get('_route'), app.request.query|merge({ 'page': page })) }}">{{ page }}</a></li>
+                    {% else %}
+                        <li class="page-item active"><span class="page-link">{{ page }}</span></li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if accounts.currentPageNumber < accounts.pageCount %}
+                    <li class="page-item"><a class="page-link" href="{{ path(app.request.attributes.get('_route'), app.request.query|merge({ 'page': accounts.currentPageNumber + 1 })) }}">&raquo;</a></li>
+                {% else %}
+                    <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+                {% endif %}
+            </ul>
+        </div>
+    {% endif %}
+{% endblock %}
+
+
+
+
+
+
+
+
+		</div>	
+	
+	</div>
+	
+</div>
+
+
+<script>
+	function confirmDelete(accountId) { // Show the modal
+var modal = new bootstrap.Modal(document.getElementById('deleteAccountModal'));
+modal.show();
+
+// Update the href attribute of the delete button
+var deleteButton = document.getElementById('confirmDeleteButton');
+deleteButton.href = '/accounts/delete/' + accountId;
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+var deleteModal = new bootstrap.Modal(document.getElementById('deleteAccountModal'));
+
+function confirmDelete(accountId) { // Update the delete link href attribute with the account ID
+document.getElementById('deleteAccountLink').href = '/accounts/delete/' + accountId;
+// Show the modal
+deleteModal.show();
+}
+
+// Example: Call confirmDelete function when a delete button is clicked
+var deleteButtons = document.querySelectorAll('.delete-button');
+deleteButtons.forEach(function (button) {
+button.addEventListener('click', function () {
+var accountId = this.dataset.accountId;
+confirmDelete(accountId);
+});
+});
+});
+</script>{% endblock %}

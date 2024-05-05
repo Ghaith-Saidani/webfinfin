@@ -1,0 +1,17 @@
+
+<!-- Modal -->
+<div class="modal fade" id="transactionTypeModal" tabindex="-1" aria-labelledby="transactionTypeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="transactionTypeModalLabel">Select Transaction Type</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                 <button type="button" class="btn btn-primary" onclick="showIncomeForm(selectedAccountId)">Income</button>
+                <button type="button" class="btn btn-primary" onclick="showExpenseForm(selectedAccountId)">Expense</button>
+                <button type="button" class="btn btn-primary" onclick="showTransferForm(selectedAccountId)">Transfer</button>
+            </div>
+        </div>
+    </div>
+</div>

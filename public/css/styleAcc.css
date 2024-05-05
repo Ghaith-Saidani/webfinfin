@@ -1,0 +1,127 @@
+.account-actions span {
+  display: inline-block;
+  padding: 7px 10px;
+  border-radius: 4px;
+  height: 30px;
+  background-color: #d3fae2;
+  color: #12A347;
+  cursor: pointer;
+  margin-left: 5px;
+}
+.account-actions span:first-child {
+  background-color: #e1e1f9;
+  color: #2F2CD8;
+}
+.account-actions span:last-child {
+  background-color: #fcecec;
+  color: #DC2626;
+}
+
+
+.payee-actions span {
+  display: inline-block;
+  padding: 7px 10px;
+  border-radius: 4px;
+  height: 30px;
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+#payeeName {
+border-radius: 0;
+border-top-right-radius: 0.25rem;
+border-bottom-right-radius: 0.25rem;
+}
+
+#addPayeeBtn {
+border-radius: 0;
+border-top-left-radius: 0.25rem;
+border-bottom-left-radius: 0.25rem;
+}
+
+/* Add custom classes for styling */
+.payee-actions .edit-button {
+display: inline-block;
+padding: 7px 10px;
+border-radius: 4px;
+height: 30px;
+background-color: #d3fae2; /* Green background color */
+color: #12a347; /* Green text color */
+cursor: pointer;
+margin-left: 5px;
+}
+
+.payee-actions .delete-button {
+display: inline-block;
+padding: 7px 10px;
+border-radius: 4px;
+height: 30px;
+background-color: #fcecec; /* Red background color */
+color: #dc2626; /* Red text color */
+cursor: pointer;
+margin-left: 5px;
+}
+
+
+
+/* Modal styles */
+.modal {
+  display: none; /* Initially hidden */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1050;
+}
+
+.modal.show {
+  display: block; /* Show modal when necessary */
+}
+
+.modal-dialog {
+  position: relative;
+  width: auto;
+  max-width: 600px; /* Adjust the width as needed */
+  margin: auto;
+}
+
+.modal-content {
+  background-color: #ffffff; /* White background */
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Soft shadow effect */
+}
+
+.modal-header {
+  padding: 20px;
+  border-bottom: 1px solid #eeeeee; /* Light gray border bottom */
+}
+
+.modal-title {
+  font-size: 20px;
+  color: #333333; /* Dark text color */
+}
+
+.modal-body {
+  padding: 20px;
+}
+
+.modal-footer {
+  padding: 20px;
+  border-top: 1px solid #eeeeee; /* Light gray border top */
+  text-align: right;
+}
+
+.modal-footer button {
+  background-color: #007bff; /* Blue button color */
+  color: #ffffff; /* White text color */
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.modal-footer button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+

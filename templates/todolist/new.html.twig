@@ -1,0 +1,19 @@
+{% extends 'base2.html.twig' %}
+
+{% block title %}New Todolist{% endblock %}
+
+{% block body %}
+    {% block content %}
+        <div class="container mt-4">
+            <h1>Create New Todolist</h1>
+
+            <div class="card shadow">
+                <div class="card-body">
+                    {{ include('todolist/_form.html.twig') }}
+                </div>
+            </div>
+
+            <a href="{{ path('app_todolist_index') }}" class="btn btn-secondary mt-3">Back to List</a>
+        </div>
+    {% endblock %}
+{% endblock %}

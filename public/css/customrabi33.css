@@ -1,0 +1,89 @@
+.pagination-wrapper {
+    margin-top: 20px; /* Add spacing between the table and pagination */
+    display: flex;
+    justify-content: center;
+}
+
+.pagination {
+    list-style: none;
+    padding: 0;
+    display: inline-flex;
+}
+
+.pagination .current {
+    background-color: #007bff; /* Blue color for current page */
+    color: #ffffff; /* White text color */
+    font-size: 16px; /* Larger font size */
+    padding: 10px 20px; /* Padding around the current page */
+    border-radius: 5px; /* Rounded corners */
+    margin-right: 5px; /* Add spacing between pages */
+}
+
+.pagination .page a {
+    background-color: #ffffff; /* White background for page links */
+    color: #007bff; /* Blue text color */
+    font-size: 16px; /* Larger font size */
+    padding: 10px 20px; /* Padding around the page links */
+    border-radius: 5px; /* Rounded corners */
+    margin-right: 5px; /* Add spacing between pages */
+    text-decoration: none; /* Remove default underline */
+}
+
+.pagination .page a:hover {
+    background-color: #f0f0f0; /* Light gray background on hover */
+}
+
+.pagination .next a,
+.pagination .last a {
+    background-color: #007bff; /* Blue color for next and last links */
+    color: #ffffff; /* White text color */
+    font-size: 16px; /* Larger font size */
+    padding: 10px 20px; /* Padding around the links */
+    border-radius: 5px; /* Rounded corners */
+    margin-right: 5px; /* Add spacing between pages */
+    text-decoration: none; /* Remove default underline */
+}
+
+.pagination .next a:hover,
+.pagination .last a:hover {
+    background-color: #0056b3; /* Darker blue color on hover */
+}
+        /* Custom CSS for changing table color */
+        .table {
+            background-color: transparent; /* Set background color to transparent */
+            color: #333333; /* Default text color */
+        }
+
+        /* Custom CSS for table header */
+        .thead-dark th {
+            background-color: transparent; /* Set header background color to transparent */
+            color: #ffffff; /* Default header text color */
+        }
+
+        /* Custom CSS for table row hover effect */
+        .table-hover tbody tr:hover {
+            background-color: #add8e6; /* Light blue hover color */
+        }
+
+        /* CSS to hide the QR code initially */
+        .qr-code {
+            display: none;
+        }
+
+        /* Styling for QR code popup */
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            border: 2px solid #add8e6; /* Light blue border */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            z-index: 9999;
+        }
+
+        .popup img {
+            max-width: 100%;
+            height: auto;
+        }

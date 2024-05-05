@@ -1,0 +1,38 @@
+
+{% block title %}Subcategory index{% endblock %}
+
+{% block body %}
+    <h1>Subcategory index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Idsubcategory</th>
+                <th>Name</th>
+                <th>Mtassigné</th>
+                <th>Mtdépensé</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for subcategory in subcategories %}
+            <tr>
+                <td>{{ subcategory.idsubcategory }}</td>
+                <td>{{ subcategory.name }}</td>
+                <td>{{ subcategory.mtassigne }}</td>
+                <td>{{ subcategory.mtDepense }}</td>
+                <td>
+                    <a href="{{ path('app_subcategory_show', {'idsubcategory': subcategory.idsubcategory}) }}">show</a>
+                    <a href="{{ path('app_subcategory_edit', {'idsubcategory': subcategory.idsubcategory}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_subcategory_new') }}">Create new</a>
+{% endblock %}

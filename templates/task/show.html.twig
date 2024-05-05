@@ -1,0 +1,47 @@
+{% extends 'base2.html.twig' %}
+
+{% block title %}Task{% endblock %}
+
+{% block body %}
+    {% block content %}
+        <div class="container">
+            <div class="card mt-4">
+                <div class="card-header bg-primary text-white">
+                    <h1 class="card-title mb-0">Task Details</h1>
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-4 text-strong-grey">Description</dt>
+                        <dd class="col-sm-8">{{ task.descriptionTask }}</dd>
+
+                        <dt class="col-sm-4 text-strong-grey">Amount to Pay</dt>
+                        <dd class="col-sm-8">{{ task.mtAPayer }}</dd>
+
+                        <dt class="col-sm-4 text-strong-grey">Priority</dt>
+                        <dd class="col-sm-8">{{ task.priority }}</dd>
+
+                        <dt class="col-sm-4 text-strong-grey">Due Date</dt>
+                        <dd class="col-sm-8">{{ task.dueDate ? task.dueDate|date('Y-m-d') : 'Not set' }}</dd>
+
+                        <dt class="col-sm-4 text-strong-grey">Status</dt>
+                        <dd class="col-sm-8">{{ task.statusTask }}</dd>
+
+                        <dt class="col-sm-4 text-strong-grey">Creation Date</dt>
+                        <dd class="col-sm-8">{{ task.creationDate ? task.creationDate|date('Y-m-d') : '' }}</dd>
+
+                        <dt class="col-sm-4 text-strong-grey">Todo List</dt>
+                        <dd class="col-sm-8">{{ task.idtodo }}</dd>
+
+                        <dt class="col-sm-4 text-strong-grey">Subcategory</dt>
+                        <dd class="col-sm-8">{{ task.idSubCategory }}</dd>
+                    </dl>
+
+                    <div class="text-center mt-3">
+                        <a href="{{ path('app_task_index') }}" class="btn btn-secondary mr-3">Back to List</a>
+                        <a href="{{ path('app_task_edit', {'id': task.idtask}) }}" class="btn btn-primary">Edit</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+{% endblock %}

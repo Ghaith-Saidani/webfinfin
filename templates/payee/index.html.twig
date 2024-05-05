@@ -1,0 +1,35 @@
+<div class="modal-body">
+    <h4>List of Payees</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Payee Name</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for payee in payees %}
+                <tr>
+                    <td id="payeeName_{{ payee.idpayee }}">{{ payee.namepayee }}</td>
+                    <td class="payee-actions">
+                        <span class="btn btn-success btn-sm edit-button" onclick="editPayee({{ payee.idpayee }})">
+                            <i class="fi fi-rr-pencil edit-icon"></i>
+                        </span>
+                    </td>
+                    <td class="payee-actions">
+                        <span class="btn btn-danger btn-sm delete-payee delete-button" data-payee-id="{{ payee.idpayee }}">
+                            <i class="fi fi-rr-trash delete-icon"></i>
+                        </span>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div id="warningMessage" class="text-danger"></div>
+    <form id="addPayeeForm">
+        <div class="input-group mb-3">
+            <input type="text" id="payeeName" name="payeeName" class="form-control" placeholder="Enter payee name">
+            <button type="button" id="addPayeeBtn" class="btn btn-primary" onclick="addPayee()">Add Payee</button>
+        </div>
+    </form>
+</div>

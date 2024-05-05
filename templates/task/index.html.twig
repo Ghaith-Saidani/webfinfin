@@ -1,0 +1,83 @@
+{% extends 'base2.html.twig' %}
+
+{% block title %}Task index{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        /* Custom CSS for changing table color */
+        .table {
+            background-color: transparent; /* Set background color to transparent */
+            color: #333333; /* Default text color */
+        }
+
+        /* Custom CSS for table header */
+        .thead-dark th {
+            background-color: transparent; /* Set header background color to transparent */
+            color: #ffffff; /* Default header text color */
+        }
+
+        /* Custom CSS for table row hover effect */
+        .table-hover tbody tr:hover {
+            background-color: #add8e6; /* Light blue hover color */
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    {% block content %}
+        <div class="container">
+            <h1 class="mb-4">Task Index</h1>
+
+            <table class="table table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Description</th>
+                        <th>Amount to Pay</th>
+                        <th>Priority</th>
+                        <th>Due Date</th>
+                        <th>Status</th>
+                        <th>Creation Date</th>
+                        <th>Todo List</th>
+                        <th>Subcategory</th>
+                        <th>Actions</th> <!-- Added Actions header -->
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for task in pagination %}
+                        <tr>
+                            <td>{{ task.descriptiontask }}</td>
+                            <td>{{ task.mtapayer }}</td>
+                            <td>{{ task.priority }}</td>
+                            <td>{{ task.duedate ? task.duedate|date('Y-m-d') : '' }}</td>
+                            <td>{{ task.statustask }}</td>
+                            <td>{{ task.creationdate ? task.creationdate|date('Y-m-d') : '' }}</td>
+                            <td>{{ task.idtodo }}</td>
+                            <td>{{ task.idsubcategory.name }}</td>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <a href="{{ path('app_task_show', {'id': task.idtask}) }}" class="mr-3" style="font-size: larger; color: blue;"><i class="fas fa-eye"></i></a>
+                                    <!-- Added margin-right to create space -->
+                                    <a href="{{ path('app_task_edit', {'id': task.idtask}) }}" class="mr-3" style="font-size: larger; color: orange;"><i class="fas fa-edit"></i></a>
+                                    <form method="post" action="{{ path('app_task_delete', {'id': task.idtask}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ task.idtask) }}">
+                                        <button type="submit" style="border: none; background-color: transparent; font-size: larger;"><i class="fas fa-trash" style="color: red;"></i></button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="9">No records found</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            {# Render pagination links #}
+            {{ knp_pagination_render(pagination) }}
+
+            <a href="{{ path('app_task_new') }}" class="btn btn-success">Create New</a>
+        </div>
+    {% endblock %}
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'base2.html.twig' %}
+
+{% block title %}Itemcategory index{% endblock %}
+
+{% block body %}
+
+    <div class="goals-tab">
+        <div class="row g-0">
+            <div class="col-xl-3">
+                <div class="nav d-block">
+                    <div class="row">
+                        
+                     {% for wishlist in wishlists %}
+                     <div class="col-xl-12 col-md-6">
+                         <div class="goals-nav">
+                             <div class="goals-nav-text">
+                                 <h3>{{ wishlist.namewishlist }}</h3>
+                             </div>
+                             <a href="{{ path('app_wishlist_show', {'iditemcategory': wishlist.namewishlist}) }}" class="btn btn-primary">View</a>
+                             <a href="{{ path('app_wishlist_edit', {'iditemcategory': itemcategory.iditemcategory}) }}" class="btn btn-secondary">Modify</a>
+                         </div>
+                     </div>
+                     {% endfor %}
+                    </div>
+                </div> 
+        
+             
+    
+                <div class="add-goals-link">
+                    <h5 class="mb-0">Add new Wishlist</h5>
+                    <a href="{{ path('app_wishlist_new') }}">
+                        <i class="fi fi-rr-square-plus"></i>
+                    </a>
+                </div>
+            </div>
+        </div>   
+    </div>
+
+{% endblock %}

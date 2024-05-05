@@ -1,0 +1,193 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CategoryController!{% endblock %}
+
+
+{% block content %}
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title">
+                <div class="row align-items-center justify-content-between">
+                    <div class="col-xl-4">
+                        <div class="page-title-content">
+                            <h3>Categories</h3>
+                            <p class="mb-2">Welcome to PennyWise</p>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <div class="breadcrumbs"><a href="#">Home </a>
+                            <span><i class="fi fi-rr-angle-small-right"></i></span>
+                            <a href="{{ path('app_budget') }}">Categories</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+              </div>
+    <div class="row">
+        <div class="col-xxl-12 col-xl-12">
+            <div class="settings-menu">
+                <a href="settings.html">Account</a>
+                <a href="settings-general.html">General</a>
+                <a href="settings-profile.html">Profile</a>
+                <a href="settings-bank.html">Add Bank</a>
+                <a href="settings-security.html">Security</a>
+                <a href="settings-session.html">Session</a>
+                <a href="settings-categories.html">Categories</a>
+                <a href="settings-currencies.html">Currencies</a>
+                <a href="settings-api.html">Api</a>
+                <a href="support.html">Support</a>
+            </div>
+            <div class="row">
+                <div class="col-xxl-8 col-xl-8 col-lg-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title"> Categories</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="category-type">
+                           <ul>
+                                        <li>
+    <div class="left-category">
+        <span class="drag-icon"></i> name    </span>    
+        <span class="category-icon"><i class="bg-purple-500 fi fi-rr-usd-circle"></i>&nbsp;{{ category.name }}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </div>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <div class="left-category">
+        <span class="drag-icon"></i> budget limit    </span>    
+        <span class="category-icon"><i class="bg-purple-500 fi fi-rr-usd-circle"></i>{{ category.budgetlimit }}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </div>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <div class="left-category">
+        <span class="drag-icon"></i> Wallet </span>    
+        <span class="category-icon"><i class="bg-purple-500 fi fi-rr-usd-circle"></i>&nbsp;{{ category.idwallet.name }}</span>
+    </div>
+
+
+
+                                        <div class="right-category">
+                                <span>           <a href="{{ path('app_category_edit', {'idcategory': category.idcategory}) }}">  <i class="fi fi-rs-pencil"></i></span>
+                                          {{ include('category/_delete_form.html.twig') }}   
+                                        </div>
+                                    </li>
+                                    
+                          
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                  			
+                       		
+
+
+
+              <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">sous Categories</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="category-type">
+                            <ul>
+                            {% set total_mtdepense = 0 %}
+
+                                {% for subcategory in subCategories %}
+                                    <li>
+                                        <div class="left-category"> 
+                                            <span class="drag-icon"></i>your subcategory name is    </span>    
+                                            <span class="category-icon"><i class="bg-lime-500 fi fi-rr-sack-dollar"></i>{{ subcategory.name }}</span>
+                                        </div>
+                                            <div class="left-category">
+                                            <span class="drag-icon"></i> the budget you estimated is    </span>    
+                                            <span class="category-icon"><i class="bg-lime-500 fi fi-rr-sack-dollar"></i>{{ subcategory.mtassigne }}</span>
+                                        </div>
+                                            <div class="left-category">
+                                            <span class="drag-icon"></i> the budget you spent is    </span>    
+                                            <span class="category-icon"><i class="bg-lime-500 fi fi-rr-sack-dollar"></i>{{ subcategory.mtdepense	 }}</span>
+                                        </div>
+
+
+
+                                               <div class="right-category">
+                                <span>           <a href="{{ path('app_subcategory_edit', {'idsubcategory': subcategory.idsubcategory}) }}">  <i class="fi fi-rs-pencil"></i></span>
+                                          {{ include('subcategory/_delete_form.html.twig') }}   
+                                        </div>
+                              {% set total_mtdepense = total_mtdepense + subcategory.mtdepense %}
+
+                                    </li>
+
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    
+<div class="col-xl-12">
+    <div class="card">
+        <div class="card-body">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <span>Spend</span>
+                    <h3>{{ total_mtdepense }}</h3>
+                </div>
+                <div class="text-end">
+                    <span>Budget</span>
+                    <h3>{{ category.budgetlimit }}</h3>
+                </div>
+            </div>
+            {% set spend_percentage = (total_mtdepense / category.budgetlimit) * 100 %}
+            <div class="progress">
+                <div class="progress-bar" style="width: {{ spend_percentage }}%;" role="progressbar"></div>
+            </div>
+            <div class="d-flex justify-content-between mt-2">
+                <span>{{ spend_percentage }}%</span>
+                <span>{{ 100 - spend_percentage }}%</span>
+            </div>
+        </div>
+    </div>
+</div>
+{% set difference = category.budgetlimit - total_mtdepense %}
+{% set absolute_difference = difference|abs %}
+{% if difference > 0 %}
+    <h2>Les dépenses totales sont inférieures à la limite du budget de {{ absolute_difference }}.</h2>
+{% elseif difference == 0 %}
+    <h2>Les dépenses totales sont égales à la limite du budget.</h2>
+{% else %}
+    <h2>Les dépenses totales dépassent la limite du budget de {{ absolute_difference }}.</h2>
+{% endif %}
+
+
+
+                </div>
+            </div>
+        </div>
+        
+
+
+    </div>  <div class="mt-3">
+        <a href="{{ path('expense_stats', {'idcategory': category.idcategory}) }}" class="btn btn-primary">stat avec pei chart 
+            <i class="fas fa-chart-pie"></i>
+        </a>
+        <a href="{{ path('expense_stats1', {'idcategory': category.idcategory}) }}" class="btn btn-primary">stat avec bar chart 
+            <i class="fas fa-chart-bar"></i>
+        </a>
+    </div>
+
+</div>
+
+
+{% endblock %}
+
+

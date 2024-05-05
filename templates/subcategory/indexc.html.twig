@@ -1,0 +1,113 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="page-title">
+            <div class="row align-items-center justify-content-between">
+                <div class="col-xl-4">
+                		<div class="input-group">
+												<input type="text"  id="search-input" class="form-control" placeholder="Search Here">
+												<span class="input-group-text">
+													<i class="fi fi-br-search"></i>
+												</span>
+											</div>
+									</div>
+
+
+                    <div class="page-title-content">
+                        <h3> Subcategory Categories</h3>
+                        <p class="mb-2">Welcome to PennyWise</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xxl-8 col-xl-8 col-lg-6">
+        <a class="btn btn-success mt-3" href="{{ path('app_subcategory_new') }}">Créer un nouveau SubCategory</a>
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Subcategory Categories</h4>
+            </div>
+            <div class="card-body">
+                <div class="category-type">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <div class="left-category">
+                                        <span class="category-icon"><i class="bg-orange-500 fi fi-rr-life-ring"></i> name</span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="left-category">
+                                        <span class="category-icon"><i class="bg-lime-500 fi fi-rr-sack-dollar"></i> mtassigné</span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="left-category">
+                                        <span class="category-icon"><i class="bg-lime-500 fi fi-rr-sack-dollar"></i> mtdépensé</span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="left-category">
+                                        <span class="category-icon"><i class="bg-lime-500 fi fi-rr-sack-dollar"></i> category name</span>
+                                    </div>
+                                </th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for subcategory in subcategories %}
+                            <tr>
+                                <td>{{ subcategory.name }}</td>
+                                <td>{{ subcategory.mtassigne }}</td>
+                                <td>{{ subcategory.mtdepense }}</td>
+                                <td>{{ subcategory.idcategory.name }}</td>
+                                <td>
+                                    <div class="right-category">
+                                        <a href="{{ path('app_subcategory_edit', {'idsubcategory': subcategory.idsubcategory}) }}"><span><i class="fi fi-rs-pencil"></i></span></a>
+                                        <a href="{{ path('app_subcategory_show', {'idsubcategory': subcategory.idsubcategory}) }}"><span><i class="fi fi-rr-eye"></i></span></a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="2">No income categories found</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            {{ knp_pagination_render(subcategories, 'subcategory/custom_template.html.twig') }}
+
+        </div>
+    </div>
+</div>
+{% block js %}
+	<script src="{{ asset('vendor/jquery/jquery.min.js')}}"></script>
+	<script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+	<script src="{{ asset('vendor/chartjs/chartjs.js')}}"></script>
+	<script src="{{ asset('js/plugins/chartjs-line-balance-overtime.js')}}"></script>
+	<script src="{{ asset('js/plugins/chartjs-bar-income-vs-expense.js')}}"></script>
+
+	<script src="{{ asset('js/scripts.js')}}"></script>
+	<script src="{{ asset('js/walletScripts.js')}}"></script>
+    {% if app.debug %}
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                $("#search-input").on("keyup", function() {
+                    var value = $(this).val().toLowerCase();
+                    $(".table tbody tr").filter(function() {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+                    });
+                });
+            });
+        </script>
+    {% endif %}
+{% endblock %}
+{% endblock %}
