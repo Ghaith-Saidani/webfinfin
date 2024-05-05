@@ -1,0 +1,15 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+settings_profile:
+    path: '/user/settings-profile'
+    controller: App\Controller\UserController::goToSettingsProfile
+    methods: ['GET']
+    defaults:
+        form: null
+        formImage: null
+
+   
+
+
+

@@ -1,0 +1,183 @@
+{% extends 'baseFront.html.twig' %}
+
+{% block title %}Front Office!{% endblock %}
+{% block content %}
+
+ 
+    <!-- Banner Section end -->
+
+    <!-- Global Payment start -->
+    
+<section class="our-solutions">
+    <div class="overlay pt-120 pb-120">
+        <div class="container wow fadeInUp">
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <div class="section-header dark-sec text-center">
+                        <h5 class="sub-title">Manage Your Debts Efficiently</h5>
+                        <h2 class="title">Consolidate and Simplify</h2>
+                        <p>Streamline your debt management process with our platform. Enjoy low fees and high-speed transactions. Say goodbye to hassle and confusion.</p>
+                    </div>
+                </div>
+            </div>
+
+
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
+    {% for debt in debts %}
+    <div class="col mb-3">
+        <div class="card h-100 shadow border-0">
+            <div class="card-body">
+                <h5 class="card-title text-primary mb-3">{{ debt.type.getNamedebt() }}</h5>
+                <p class="card-text text-muted">Amount: {{ debt.getAmount() }}</p>
+            </div>
+            <div class="card-footer bg-transparent border-0">
+                <small class="text-muted">
+                    <i class="fas fa-calendar-alt"></i> Due Date: {{ debt.getPaymentdate()|date('Y-m-d') }}
+                </small>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+    </div>
+</section>
+<!-- Our Solutions end -->
+
+
+    <!-- How it Works start -->
+
+<!-- How it Works end -->
+
+
+    <!-- App Download start -->
+
+<!-- App Download end -->
+
+
+    <!-- Testimonials start -->
+
+<!-- Testimonials end -->
+
+    <!-- FAQs In start -->
+    <section class="faqs-section">
+        <div class="overlay pt-120 pb-120">
+            <div class="container">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-lg-7">
+                        <div class="section-header text-center">
+                            <h5 class="sub-title">Frequently Asked Questions</h5>
+                            <h2 class="title">If you got questions we have answer</h2>
+                            <p>We have a list of frequently asked questions about us</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row cus-mar">
+                    <div class="col-lg-6">
+                        <div class="accordion" id="accordionLeft">
+                            <div class="accordion-item">
+                                <h6 class="accordion-header" id="headingLeftOne">
+                                    <button class="accordion-button collapsed" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#collapseLeftOne"
+                                        aria-expanded="false" aria-controls="collapseLeftOne">
+                                        How does Pennywise ensure security?
+                                    </button>
+                                </h6>
+                                <div id="collapseLeftOne" class="accordion-collapse collapse"
+                                    aria-labelledby="headingLeftOne" data-bs-parent="#accordionLeft">
+                                    <div class="accordion-body">
+                                        <p>We store all users data in a safe and secure way.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h6 class="accordion-header" id="headingLeftTwo">
+                                    <button class="accordion-button collapsed" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#collapseLeftTwo"
+                                        aria-expanded="false" aria-controls="collapseLeftTwo">
+                                        What is Pennywise ?
+                                    </button>
+                                </h6>
+                                <div id="collapseLeftTwo" class="accordion-collapse collapse"
+                                    aria-labelledby="headingLeftTwo" data-bs-parent="#accordionLeft">
+                                    <div class="accordion-body">
+<p>Pennywise is a do all app but its main purpose is budget management, however it also allows you to organize your payements and reach your financial goals.</p>                                    </div>
+                                </div>
+                            </div>
+                            
+                            
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="accordion" id="accordionRight">
+                            
+                            
+                            <div class="accordion-item">
+                                <h6 class="accordion-header" id="headingRightThree">
+                                    <button class="accordion-button collapsed" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#collapseRightThree"
+                                        aria-expanded="false" aria-controls="collapseRightThree">
+                                        
+How much is a subscription to Pennywise ?
+
+                                    </button>
+                                </h6>
+                                <div id="collapseRightThree" class="accordion-collapse collapse"
+                                    aria-labelledby="headingRightThree" data-bs-parent="#accordionRight">
+                                    <div class="accordion-body">
+<p>Pennywise is a completely free app that is accessible to all users</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h6 class="accordion-header" id="headingRightFour">
+                                    <button class="accordion-button collapsed" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#collapseRightFour"
+                                        aria-expanded="false" aria-controls="collapseRightFour">
+                                        How to use Pennywise ?
+                                    </button>
+                                </h6>
+                                <div id="collapseRightFour" class="accordion-collapse collapse"
+                                    aria-labelledby="headingRightFour" data-bs-parent="#accordionRight">
+                                    <div class="accordion-body">
+<p>All you need to do is to create an account if you don't have one, fill a small form to help costumize your plan, select your income and expenses, and then all you have to do is keep track?</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- FAQs In end -->
+
+{% endblock %}
+
+
+
+
+

@@ -1,0 +1,59 @@
+
+
+<body class="dashboard">
+{% block body %}
+
+    <div class="auth-form">
+                                <h4 style="text-align: center; ">ADD BLOG</h4>
+                                <div style="width: 50%; margin: 0 auto; border: 1px solid #ccc; padding: 20px; border-radius: 5px;">
+                                {{ form_start(form,{'attr': {'novalidate': 'novalidate'}})}}
+                                    <div class="row">
+                                        <div class="col-12 mb-3">
+                                            
+                                        <div class="col-12 mb-3"><label class="form-label">Blog title</label>
+                                            
+                                            {{ form_row(form.title, { 'label': false, 'placeholder':"", 'attr': { 'class': 'form-control'}})}}
+
+                                        </div>
+                                        <div class="col-12 mb-3"><label class="form-label">Select content</label>
+                                             {{ form_row(form.content, { 'label': false, 'placeholder':"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque quam neque, auctor vitae consequat a, condimentum in ante. Duis dictum iaculis malesuada. Vivamus ultrices erat nibh, id pretium ante mattis et. Donec malesuada elit at semper suscipit. Etiam sed lacus sit amet nisi aliquet tempus.", 'attr': { 'class': 'form-control'}})}}
+                                        </div>
+                                         <div class="col-12 mb-3">
+                                            <label class="form-label">Date</label>
+                                             {{ form_row(form.datePublished, { 'label': false, 'placeholder':"", 'attr': { 'class': 'form-control'}})}}
+                                        </div>
+                                        <div class="col-12 mb-3">
+                                            <label class="form-label">Add tags</label>
+                                             {{ form_row(form.tags, { 'label': false, 'placeholder':""})}}
+                                        </div>
+                                        <div class="col-12 mb-3"><label class="form-label">Select an image</label>
+                                             {{ form_row(form.imageFile, { 'label': false, 'placeholder': "" , 'attr': { 'class': 'form-control'}})}}
+                                        </div>
+                                        
+                                        
+                                       
+                                       
+                                        </div>
+                                    </div>
+                                    <div class="mt-3 d-grid gap-2"><button class="btn btn-primary me-8 text-white" style="width: 100%;">{{ button_label|default('Save') }}</button>
+                                    </div>
+                                {{ form_end(form)}}
+                                </div>
+                            </div>
+{% endblock %}
+</body>
+
+{% block css %}
+<link rel="stylesheet" href="{{asset('css/style.css')}}">
+ <link rel="stylesheet" href="{{asset('vendor/toastr/toastr.min.css')}}">
+{% endblock %}
+
+{% block js %}
+ <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
+    <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <!--  -->
+    <!--  -->
+    <script src="{{asset('js/scripts.js')}}"></script>
+    
+    
+{% endblock %}

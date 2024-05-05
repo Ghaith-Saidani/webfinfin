@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Blog index{% endblock %}
+
+{% block body %}
+    <h1>Blog index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Content</th>
+                <th>DatePublished</th>
+                <th>NbrOfLikes</th>
+                <th>BlogImage</th>
+                <th>Tags</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for blog in blogs %}
+            <tr>
+                <td>{{ blog.id }}</td>
+                <td>{{ blog.title }}</td>
+                <td>{{ blog.content }}</td>
+                <td>{{ blog.datePublished ? blog.datePublished|date('Y-m-d') : '' }}</td>
+                <td>{{ blog.nbrOfLikes }}</td>
+              
+                   <td>  <img class="me-3 rounded-circle me-0 me-sm-3" src="{{ asset('images/blog/' ~ blog.blogImage) }}" width="55" height="55" alt=""></td>
+
+                <td>{{ blog.tags ? blog.tags|join(', ') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_blog_show', {'id': blog.id}) }}">show</a>
+                    <a href="{{ path('app_blog_edit', {'id': blog.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_blog_new') }}">Create new</a>
+{% endblock %}

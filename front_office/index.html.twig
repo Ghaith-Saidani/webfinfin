@@ -1,0 +1,432 @@
+{% extends 'baseFront.html.twig' %}
+
+{% block title %}Hello FrontOfficeController!{% endblock %}
+{% block content %}
+
+ <section class="banner-section index">
+        <div class="overlay">
+            <div class="shape-area">
+                <img src="{{ asset('assets/images/banner-box.png') }}" class="obj-1" alt="image" >
+                <img src="{{ asset('assets/images/banner-human.png') }}" class="obj-2" alt="image">
+                <img src="{{ asset('assets/images/banner-rocket.png') }}" class="obj-3" alt="image" >
+                <img src="{{ asset('assets/images/banner-clock.png') }}" class="obj-4" alt="image">
+            </div>
+            <div class="banner-content">
+                <div class="container wow fadeInUp">
+                    <div class="content-shape">
+                       <img src="{{ asset('assets/images/banner-wallet.png') }}" class="obj-1" alt="image" width="100" height="100">
+
+                    </div>
+                    
+                    <div class="row justify-content-between align-items-center">
+                        <div class="col-lg-5 col-md-6">
+                            <div class="main-content">
+                                <div class="top-area section-text">
+                                    <h5 class="sub-title">Your guide for money management</h5>
+                                    <h1 class="title">Become a money genius</h1>
+                                    <p class="xlr">Keep track of your finances, <br> Improve your habits, <br> Achieve your financial goals</p>
+                                </div>
+                                <div class="bottom-area d-xxl-flex">
+                                    <a href="{{path('signup')}}" class="cmn-btn">Create an Account</a>
+                                    <a class="cmn-btn active" href="#how-it-works">See How it Works</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xxl-4 col-xl-5 col-md-6">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="counter-section">
+            <div class="container wow fadeInUp">
+                <div class="row cus-mar">
+                    <div class="col-xl-3 col-md-3 col-sm-6">
+                        <div class="single-area d-flex align-items-center justify-content-center">
+                            <div class="text-area text-center">
+                                <h2><span class="counter">4</span><span>+</span></h2>
+                                <p>Supported Currencies</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-3 col-sm-6">
+                        <div class="single-area d-flex align-items-center justify-content-center">
+                            <div class="text-area text-center">
+                                <h2><span class="counter">100</span><span>+</span></h2>
+                                <p>Available Countries</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-3 col-sm-6">
+                        <div class="single-area d-flex align-items-center justify-content-center">
+                            <div class="text-area text-center">
+                                <h2><span class="counter">6</span><span>+</span></h2>
+                                <p>Team</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-3 col-sm-6">
+                        <div class="single-area d-flex align-items-center justify-content-center">
+                            <div class="text-area text-center">
+                                <h2><span class="counter">7</span><span>/</span><span class="counter">24</span><span>+</span></h2>
+                                <p>Support Team</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Banner Section end -->
+
+    <!-- Global Payment start -->
+    <section class="global-payment">
+        <div class="overlay pt-120 pb-120">
+            <div class="container wow fadeInUp">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                        <div class="section-header text-center">
+                            <h5 class="sub-title">Improve your financial plan</h5>
+                            <h2 class="title">Build a healthy relationship with money</h2>
+                            <p>Sign up to start tracking all of your spending habits.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xxl-6 col-xl-5 order-xl-0 order-1">
+                        <div class="image-area d-rtl left-side">
+                            <img src="{{ asset('assets/images/global-payment-img.png') }}" alt="images" class="max-un">
+                        </div>
+                    </div>
+                    <div class="col-xxl-6 col-xl-7">
+                        <div class="row cus-mar">
+                            <div class="col-sm-6 col-6">
+                                <div class="single-item">
+                                    <img src="{{ asset('assets/images/icon/peace-of-mind.png') }}" alt="icon" width="50" height="50">
+                                    <h5>Peace of Mind</h5>
+                                    <p>Build a solid financial plan for yourself, ensuring peace of mind for years to come.</p>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-6">
+                                <div class="single-item">
+                                    <img src="{{ asset('assets/images/icon/clock.png') }}" alt="icon" width="50" height="50">
+                                    <h5>Flexibility</h5>
+                                    <p>Adapt your financial strategy to changing circumstances and seize new opportunities.</p>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-6">
+                                <div class="single-item">
+                                    <img src="{{ asset('assets/images/icon/energy.png') }}" alt="icon" width="50" height="50">
+                                    <h5>Efficiency</h5>
+                                    <p>Streamline your budgeting process and maximize your financial resources.</p>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-6">
+                                <div class="single-item">
+                                    <img src="{{ asset('assets/images/icon/opacity.png') }}" alt="icon" width="50" height="50">
+                                    <h5>Transparency</h5>
+                                    <p>Gain insight into your spending habits and track your progress towards financial success.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Global Payment end -->
+
+    <!-- Our Solutions start -->
+<section class="our-solutions" id="features">
+    <div class="overlay pt-120 pb-120">
+        <div class="container wow fadeInUp">
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <div class="section-header dark-sec text-center">
+                        <h5 class="sub-title">A handful of functionalities. No fees. Simple use.</h5>
+                        <h2 class="title">Everything you need, in a single app</h2>
+                        <p>Enjoy a bunch of offered functionalities for free, easily peasily </p>
+                    </div>
+                </div>
+            </div>
+            <div class="row cus-mar">
+                <div class="col-xl-3 col-6">
+                    <div class="single-item">
+                        <img src="{{ asset('assets/images/icon/money.png') }}" alt="icon" width="70" height="70">
+                        <h5>Spendings</h5>
+                        <p>Track your income and outcome and categorize them based on your lifestyle.</p>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-6">
+                    <div class="single-item">
+                        <img src="{{ asset('assets/images/icon/wishlist.png') }}" alt="icon" width="70" height="70">
+                        <h5>Wishlist</h5>
+                        <p>Keep a list of all what you need and track your progress towards them.</p>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-6">
+                    <div class="single-item">
+                        <img src="{{ asset('assets/images/icon/tasks.png') }}" alt="icon" width="70" height="70">
+                        <h5>Todo</h5>
+                        <p>Plan and receive reminders for upcoming payements to stay on top of your duties.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-6">
+                    <div class="single-item">
+                        <img src="{{ asset('assets/images/icon/bar-chart.png') }}" alt="icon" width="70" height="70">
+                        <h5>Statistics</h5>
+                        <p>Gain insight into your spending patterns with visual analysis.
+                        
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Our Solutions end -->
+
+
+    <!-- How it Works start -->
+<section class="how-it-works" id="how-it-works">
+    <div class="overlay pb-120">
+        <div class="container wow fadeInUp">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="section-header text-center">
+                        <h5 class="sub-title">How it works?</h5>
+                        <h2 class="title">Just few steps to start</h2>
+                        <p>It's easier than you think. Follow 3 simple easy steps</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row cus-mar">
+                <div class="col-xl-3 col-sm-6 col-6">
+                    <div class="single-item first text-center">
+                        <img src="{{ asset('assets/images/icon/how-works-icon-1.png') }}" alt="icon">
+                        <h5>Register for free</h5>
+                        <p>Simply sign up online for free and verify your identity</p>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 col-6">
+                    <div class="single-item second text-center">
+                        <img src="{{ asset('assets/images/icon/how-works-icon-2.png') }}" alt="icon">
+                        <h5>Set up your data</h5>
+                        <p>Add details of your income and expenses ...</p>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 col-6">
+                    <div class="single-item first text-center">
+                        <img src="{{ asset('assets/images/icon/how-works-icon-3.png') }}" alt="icon">
+                        <h5>Customize your plan</h5>
+                        <p>Add more details on personal financial details..</p>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 col-6">
+                    <div class="single-item text-center">
+                        <img src="{{ asset('assets/images/icon/how-works-icon-4.png') }}" alt="icon">
+                        <h5>You're all done!</h5>
+                        <p>We take care of the rest tracking and organising your finances ...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- How it Works end -->
+
+
+    <!-- App Download start -->
+<section class="app-download">
+    <div class="overlay pb-120">
+        <div class="container wow fadeInUp">
+            <div class="row justify-content-between align-items-center">
+                <div class="col-lg-6 order-lg-0 order-1">
+                    <div class="image-area d-rtl left-side">
+                        <img src="{{ asset('assets/images/pennywise-desktop.png') }}" alt="Screenshot" class="screenshot" >
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="section-area">
+                        <h5 class="sub-title">Available as a computer app</h5>
+                        <h2 class="title">Fast, Secure and easy</h2>
+                        <p>Access your account via your computer or browser. View balance, statistics, manage your data wherever you are.</p>
+                    </div>
+                    <ul class="features">
+                        <li>
+                            <img src="{{ asset('assets/images/icon/check.png') }}" alt="icon">
+                            Login with Email or Google.
+                        </li>
+                        <li>
+                            <img src="{{ asset('assets/images/icon/check.png') }}" alt="icon">
+                            Easy, user friendly app
+                        </li>
+                        <li>
+                            <img src="{{ asset('assets/images/icon/check.png') }}" alt="icon">
+                            View expenses history.
+                        </li>
+                        <li>
+                            <img src="{{ asset('assets/images/icon/check.png') }}" alt="icon">
+                            Get instant App notifications.
+                        </li>
+                    </ul>
+                    <div class="brand-area mt-40">
+                        <a href="javascript:void(0)">
+                            <img src="{{ asset('assets/images/GooglePlay-btn.png') }}" alt="icon">
+                        </a>
+                        <a href="javascript:void(0)">
+                            <img src="{{ asset('assets/images/apple-btn.png') }}" alt="icon">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- App Download end -->
+
+
+    <!-- Testimonials start -->
+<section class="testimonials">
+    <div class="overlay pt-120 pb-120">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <div class="section-header text-center">
+                        <h5 class="sub-title">Testimonials</h5>
+                        <h2 class="title">What Our Customers Say</h2>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid wow fadeInUp">
+            <div class="testimonials-carousel">
+                <div class="single-slide">
+                    <div class="single-content">
+                        <div class="start-area">
+                            <a href="javascript:void(0)"><i class="fas fa-star"></i></a>
+                            <a href="javascript:void(0)"><i class="fas fa-star"></i></a>
+                            <a href="javascript:void(0)"><i class="fas fa-star"></i></a>
+                            <a href="javascript:void(0)"><i class="fas fa-star"></i></a>
+                            <a href="javascript:void(0)"><i class="fas fa-star"></i></a>
+                        </div>
+                        <h5 class="title-area">Great Fast Reliable Service</h5>
+                        <p class="xlr">"Using this budget app has truly transformed the way I manage my finances. With its intuitive interface and powerful features, I feel more in control of my money than ever before. From setting financial goals to tracking expenses effortlessly, this app has made budgeting a breeze. I highly recommend it to anyone looking to take charge of their financial future!"</p>
+                        <div class="profile-area d-flex align-items-center">
+                            <div class="icon-area">
+                                <img src="{{ asset('assets/images/testimonials-img-1.png') }}" alt="icon">
+                            </div>
+                            <div class="text-area">
+                                <h5>Aspen Press</h5>
+                                <p>Web Designer</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Repeat the structure for other testimonials -->
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Testimonials end -->
+
+    <!-- FAQs In start -->
+    <section class="faqs-section">
+        <div class="overlay pt-120 pb-120">
+            <div class="container">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-lg-7">
+                        <div class="section-header text-center">
+                            <h5 class="sub-title">Frequently Asked Questions</h5>
+                            <h2 class="title">If you got questions we have answer</h2>
+                            <p>We have a list of frequently asked questions about us</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row cus-mar">
+                    <div class="col-lg-6">
+                        <div class="accordion" id="accordionLeft">
+                            <div class="accordion-item">
+                                <h6 class="accordion-header" id="headingLeftOne">
+                                    <button class="accordion-button collapsed" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#collapseLeftOne"
+                                        aria-expanded="false" aria-controls="collapseLeftOne">
+                                        How does Pennywise ensure security?
+                                    </button>
+                                </h6>
+                                <div id="collapseLeftOne" class="accordion-collapse collapse"
+                                    aria-labelledby="headingLeftOne" data-bs-parent="#accordionLeft">
+                                    <div class="accordion-body">
+                                        <p>We store all users data in a safe and secure way.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h6 class="accordion-header" id="headingLeftTwo">
+                                    <button class="accordion-button collapsed" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#collapseLeftTwo"
+                                        aria-expanded="false" aria-controls="collapseLeftTwo">
+                                        What is Pennywise ?
+                                    </button>
+                                </h6>
+                                <div id="collapseLeftTwo" class="accordion-collapse collapse"
+                                    aria-labelledby="headingLeftTwo" data-bs-parent="#accordionLeft">
+                                    <div class="accordion-body">
+<p>Pennywise is a do all app but its main purpose is budget management, however it also allows you to organize your payements and reach your financial goals.</p>                                    </div>
+                                </div>
+                            </div>
+                            
+                            
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="accordion" id="accordionRight">
+                            
+                            
+                            <div class="accordion-item">
+                                <h6 class="accordion-header" id="headingRightThree">
+                                    <button class="accordion-button collapsed" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#collapseRightThree"
+                                        aria-expanded="false" aria-controls="collapseRightThree">
+                                        
+How much is a subscription to Pennywise ?
+
+                                    </button>
+                                </h6>
+                                <div id="collapseRightThree" class="accordion-collapse collapse"
+                                    aria-labelledby="headingRightThree" data-bs-parent="#accordionRight">
+                                    <div class="accordion-body">
+<p>Pennywise is a completely free app that is accessible to all users</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h6 class="accordion-header" id="headingRightFour">
+                                    <button class="accordion-button collapsed" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#collapseRightFour"
+                                        aria-expanded="false" aria-controls="collapseRightFour">
+                                        How to use Pennywise ?
+                                    </button>
+                                </h6>
+                                <div id="collapseRightFour" class="accordion-collapse collapse"
+                                    aria-labelledby="headingRightFour" data-bs-parent="#accordionRight">
+                                    <div class="accordion-body">
+<p>All you need to do is to create an account if you don't have one, fill a small form to help costumize your plan, select your income and expenses, and then all you have to do is keep track?</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- FAQs In end -->
+
+{% endblock %}
+
+

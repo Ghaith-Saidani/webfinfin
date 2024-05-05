@@ -1,0 +1,273 @@
+{% extends 'baseFront.html.twig' %}
+
+{% block title %}Hello FrontOfficeController!{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        /* Adjust the maximum width and height of banner objects */
+        .banner-section.payment .obj-1,
+        .banner-section.payment .obj-2 {
+            max-width: 100px; /* Adjust the maximum width as needed */
+            height: auto; /* Maintain aspect ratio */
+        }
+
+        /* Card style */
+        .card {
+            background-color: var(--card-background-color);
+            box-shadow: 0px var(--card-box-shadow-1-y) var(--card-box-shadow-1-blur) var(--card-box-shadow-1), 0px var(--card-box-shadow-2-y) var(--card-box-shadow-2-blur) var(--card-box-shadow-2), 0 0 0 1px var(--card-border-color);
+            padding: 56px 16px 16px 16px;
+            border-radius: 15px;
+            cursor: pointer;
+            position: relative;
+            transition: box-shadow .25s;
+        }
+
+        .card:hover {
+            box-shadow: 0px 3px 6px var(--card-hover-box-shadow-1), 0px var(--card-hover-box-shadow-2-y) var(--card-hover-box-shadow-2-blur) var(--card-hover-box-shadow-2), 0 0 0 1px var(--card-hover-border-color);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 15px;
+            background-color: var(--card-background-color);
+        }
+
+        .icon {
+            z-index: 2;
+            position: relative;
+            display: table;
+            padding: 8px;
+        }
+
+        .icon::after {
+            content: '';
+            position: absolute;
+            inset: 4.5px;
+            border-radius: 50%;
+            background-color: var(--card-icon-background-color);
+            border: 1px solid var(--card-icon-border-color);
+            backdrop-filter: blur(2px);
+            transition: background-color .25s, border-color .25s;
+        }
+
+        .icon svg {
+            position: relative;
+            z-index: 1;
+            display: block;
+            width: 24px;
+            height: 24px;
+            transform: translateZ(0);
+            color: var(--card-icon-color);
+            transition: color .25s;
+        }
+
+        h4, p {
+            position: relative;
+            z-index: 2;
+            margin: 12px 0 4px 0;
+            font-family: inherit;
+            font-weight: 600;
+            font-size: 14px;
+            line-height: 2;
+            color: var(--card-label-color);
+        }
+
+        p {
+            font-size: 14px;
+            line-height: 1.7;
+            color: var(--text-color);
+        }
+
+        .shine {
+            border-radius: inherit;
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            overflow: hidden;
+            opacity: 0;
+            transition: opacity .5s;
+        }
+
+        .shine:before {
+            content: '';
+            width: 150%;
+            padding-bottom: 150%;
+            border-radius: 50%;
+            position: absolute;
+            left: 50%;
+            bottom: 55%;
+            filter: blur(35px);
+            opacity: var(--card-shine-opacity);
+            transform: translateX(-50%);
+            background-image: var(--card-shine-gradient);
+        }
+
+        .background {
+            border-radius: inherit;
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            -webkit-mask-image: radial-gradient(circle at 60% 5%, black 0%, black 15%, transparent 60%);
+            mask-image: radial-gradient(circle at 60% 5%, black 0%, black 15%, transparent 60%);
+        }
+
+        .tiles {
+            opacity: 0;
+            transition: opacity .25s;
+        }
+
+        .tile {
+            position: absolute;
+            background-color: var(--card-tile-color);
+            animation-duration: 8s;
+            animation-iteration-count: infinite;
+            opacity: 0;
+        }
+
+        .line {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity .35s;
+        }
+
+        .line:before, .line:after {
+            content: '';
+            position: absolute;
+            background-color: var(--card-line-color);
+            transition: transform .35s;
+        }
+
+        .line:before {
+            left: 0;
+            right: 0;
+            height: 1px;
+            transform-origin: 0 50%;
+            transform: scaleX(0);
+        }
+
+        .line:after {
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            transform-origin: 50% 0;
+            transform: scaleY(0);
+        }
+
+        .line-1:before, .line-1:after {
+            transition-delay: .0s;
+        }
+
+        .line-2:before, .line-2:after {
+            transition-delay: .15s;
+        }
+
+        .line-3:before, .line-3:after {
+            transition-delay: .3s;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <!-- Banner Section start -->
+    <section class="banner-section payment">
+        <div class="overlay">
+            <div class="shape-area">
+                <img src="{{ asset('assets/images/payment-illus-2.png') }}" class="obj-1" alt="image">
+                <img src="{{ asset('assets/images/payment-illus.png') }}" class="obj-2" alt="image">
+            </div>
+            <div class="banner-content">
+                <div class="container wow fadeInUp">
+                    <div class="row justify-content-between align-items-center">
+                        <div class="col-lg-6 col-md-7">
+                            <div class="main-content">
+                                <div class="top-area section-text">
+                                    <h5 class="sub-title">PennyWise</h5>
+                                    <h1 class="title">Making Your Task Planning Simpler</h1>
+                                    <!-- Added a tagline for clarity -->
+                                    <p class="tagline">Efficiently manage your to-do list with PennyWise</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Banner Section end -->
+
+    <!-- Features start -->
+ <section class="global-payment features">
+    <div class="container">
+        <h2 class="mb-4 constant-animation" style="font-family: 'Montserrat', sans-serif; color: #004080; text-align: center; font-size: 32px; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 30px;">Your To-Do List</h2>
+        <div class="row">
+           {% for todolist in todolists %}
+    <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+        <div class="card" id="card-{{ loop.index }}">
+            <div class="card-body">
+                <!-- Replace existing content with the image tag -->
+<img src="{{ asset('images/images.png') }}" alt="Image description" style="display: block; margin: 0 auto; max-width: 25%; height: auto; margin-left: 155px;">
+
+                <h4 class="card-title" style="font-family: 'Pacifico', cursive; font-size: 20px; margin-bottom: 10px; text-align: center; color: #004080;">{{ todolist.titletodo }}</h4>
+                <div class="card-info" style="text-align: center;">
+                    <div class="status-info" style="margin-bottom: 5px;">
+                        <span class="info-label" style="font-weight: bold; color: #004080;">Status:</span>
+                        <span class="info-value" style="color: #004080;">{{ todolist.statustodo }}</span>
+                    </div>
+                    <div class="progress-info">
+                        <span class="info-label" style="font-weight: bold; color: #004080;">Progress:</span>
+                        <span class="info-value" style="color: #004080;">{{ todolist.progress }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% else %}
+    <p class="col-12">No records found</p>
+{% endfor %}
+
+        </div>
+    </div>
+</section>
+
+
+
+
+    <!-- Features end -->
+
+    <script>
+        // Define the colors for hover state
+        const hoverBackgroundColor = '#E6E6FA'; // Lavender
+        const hoverTitleColor = '#800080'; // Purple
+        const hoverTextColor = '#4B0082'; // Indigo
+
+        document.querySelectorAll('.card').forEach((card, index) => {
+            card.addEventListener('mouseenter', () => {
+                // Change background color on hover
+                card.style.backgroundColor = hoverBackgroundColor;
+                // Change title color on hover
+                card.querySelector('.card-title').style.color = hoverTitleColor;
+                // Change text color on hover
+                card.querySelectorAll('.card-text').forEach(text => {
+                    text.style.color = hoverTextColor;
+                });
+                card.classList.add('animated', 'pulse'); // Add animation class
+            });
+            card.addEventListener('mouseleave', () => {
+                // Reset background color on mouse leave
+                card.style.backgroundColor = 'var(--card-background-color)';
+                // Reset title color on mouse leave
+                card.querySelector('.card-title').style.color = 'var(--card-label-color)';
+                // Reset text color on mouse leave
+                card.querySelectorAll('.card-text').forEach(text => {
+                    text.style.color = 'var(--text-color)';
+                });
+                card.classList.remove('animated', 'pulse'); // Remove animation class
+            });
+        });
+    </script>
+
+{% endblock %}
