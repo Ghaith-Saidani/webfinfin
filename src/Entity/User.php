@@ -98,11 +98,8 @@ class User implements UserInterface, Serializable
       
     //#[ORM\Column(name:"googleAuthenticatorSecret", type:"string", nullable:true)]
     private $googleAuthenticatorSecret;
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
-    //#[ORM\Column(type:"string", nullable:true)]
-    //private $authCode;
+    
+    
 
     public function getIduser(): ?int
     {
@@ -337,21 +334,9 @@ class User implements UserInterface, Serializable
         return $this->email;
     }
 
-    /*
-    public function getEmailAuthCode(): string
-    {
-        if (null === $this->authCode) {
-            throw new \LogicException('The email authentication code was not set');
-        }
+    
 
-        return $this->authCode;
-    }
-
-    public function setEmailAuthCode(string $authCode): void
-    {
-        $this->authCode = $authCode;
-    }
-    */
+    
     function generateResetCode() {
         // Generate a random 6-digit code
         return str_pad(mt_rand(0, 999999), 6, '0', STR_PAD_LEFT);
