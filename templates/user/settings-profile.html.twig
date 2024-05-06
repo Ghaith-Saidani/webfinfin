@@ -255,8 +255,14 @@
                                                 </div>
                                                 <div class="col-xxl-12 col-12 mb-3">
                                                     <div class="d-flex align-items-center">
-                                                        <img class="me-3 rounded-circle me-0 me-sm-3" src="{{ asset('images/users/' ~ user.urlimage) }}" width="55" height="55" alt="">
-                                                        <div class="media-body">
+                                                        {% if user is not null and user.urlimage is not null %}
+                                                            <img class="me-3 rounded-circle me-0 me-sm-3" src="{{ asset('images/users/' ~ user.urlimage) }}" width="55" height="55" alt="">
+                                                        {% else %}
+                                                            <img class="me-3 rounded-circle me-0 me-sm-3" src="{{ asset('images/users/user-avatar.png') }}" width="55" height="55" alt="">
+
+                                                        
+                                                            
+                                                        {% endif %}                                                        <div class="media-body">
                                                            
                                                             <p class="mb-0">Max file size is 20mb
                                                             </p>

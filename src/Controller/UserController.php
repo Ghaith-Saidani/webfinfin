@@ -134,43 +134,7 @@ public function register(ManagerRegistry $doctrine, Request $request, UserPasswo
     ]);
 }
 
-/*
-#[Route('/sendemail', name: 'sendemail')]
-    public function sendemail(ManagerRegistry $doctrine, Request $request, UserRepository  $userRepository,  MailerInterface $mailer, \Twig\Environment $twig): Response
-    {
-        $user = new User();
-        $form = $this->createForm(SendEmailType::class, $user);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() ) {
-            $em= $doctrine->getManager();
-            $email = $form['email']->getData();
-            $user = $user = $userRepository->findOneByEmail($email);
-            if($user){
-               $this->session->set('reset_user_email', $user->getEmail());
-               $code= $user->generateResetCode();
-               $user->setResetCode($code);
-               $em->persist($user);            
-               $em->flush();
-               $emailtosend = (new Email())
-                ->from('eyaboukh@gmail.com')
-                ->to($user->getEmail())
-                ->subject('Reset Password Code')
-                ->html($twig->render('email/resetcodesent.html.twig', [
-                    'code' => $user->getResetCode(),
-                ]));
-            $mailer->send($emailtosend);
-            return $this->redirectToRoute('resetCode');
-            }
-            else
-            {
-                return $this->redirectToRoute('sendemail');
-            }   
-        }
-        return $this->render('user/sendEmail.html.twig', [
-            'form' => $form->createView(),
-        ]);
-    }
-*/ 
+
 //send email containing code to reset password
 
 #[Route('/sendemail', name: 'sendemail')]
@@ -300,11 +264,12 @@ public function register(ManagerRegistry $doctrine, Request $request, UserPasswo
 
             // Rediriger ou afficher un message de succès
         }
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($user);
-        $entityManager->flush();
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
+        }
+
     }
-}
         return $this->render('user/settings-profile.html.twig', [
             'form' => $form->createView(),
             'imageForm' => $imageForm->createView(),
