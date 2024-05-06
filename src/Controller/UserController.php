@@ -9,6 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\User;
+use App\Entity\Blog;
 use App\Form\RegisterType;
 use App\Form\SigninType;
 use App\Form\SendEmailType;
@@ -21,6 +22,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use App\Repository\UserRepository;
+use App\Repository\BlogRepository;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -29,12 +31,6 @@ use Symfony\Component\Mime\Email;
 use Scheb\TwoFactorBundle\Security\TwoFactor\Provider\Google\GoogleAuthenticatorInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-
-
-
-
-
-
 
 class UserController extends AbstractController
 {
@@ -69,14 +65,7 @@ class UserController extends AbstractController
             'controller_name' => 'UserController',
         ]);
     }
-    /*
-    #[Route('/sendemail', name: 'sendemail')]
-    public function goToSendEmail(): Response
-    {
-        return $this->render('user/sendEmail.html.twig', [
-            'controller_name' => 'UserController',
-        ]);
-    }*/
+   
     #[Route('/resetCode', name: 'resetCode')]
     public function goToResetCode(): Response
     {
@@ -85,25 +74,13 @@ class UserController extends AbstractController
         ]);
     }
    
-    /*#[Route('/settings-profile', name: 'settings-profile')]
-    public function goToSettingsProfile(): Response
-    {
-        return $this->render('user/settings-profile.html.twig', [
-            'controller_name' => 'UserController',
-        ]);
-    }*/
-    /*[Route('/formulaire', name: 'formulaire')]
-    public function goToFormulaire(): Response
-    {
-        return $this->render('user/formulaire.html.twig', [
-            'controller_name' => 'UserController',
-        ]);
-    }*/
-
-    #[Route('/formulaire:{idUser}', name: 'formulaire')]
-    public function fillForm(int $idUser, Request $request, UserRepository  $userRepository): Response
+    
+    
+    #[Route('/user/formulaire', name: 'formulaire')]
+    public function fillForm( Request $request, UserRepository  $userRepository): Response
     {
         $entityManager = $this->getDoctrine()->getManager();
+        $idUser = $this->session->get('idUser');;
         $user = $entityManager->getRepository(User::class)->find($idUser);
         $form = $this->createForm(FormulaireType::class, $user);
         $form->handleRequest($request);
@@ -116,11 +93,9 @@ class UserController extends AbstractController
                 'debt' => $request->request->get('debt'),
                 // Add more properties as needed
             ];
-    
             $userRepository->updateUserValues($idUser, $newValues);
             return $this->redirectToRoute('app_login');
         }
-    
         // Render the formulaire form
         return $this->render('user/formulaire.html.twig', [
             'idUser' => $idUser,
@@ -129,20 +104,6 @@ class UserController extends AbstractController
     }
     
 
-    #[Route('/Homepage', name: 'Homepage')]
-public function goToHomepage(): Response
-{
-    return $this->render('user/Homepage.html.twig', [
-        'controller_name' => 'UserController',
-    ]);
-}
-#[Route('/welcome', name: 'welcome')]
-public function goToWelcome(): Response
-{
-    return $this->render('user/welcome.html.twig', [
-        'controller_name' => 'UserController',
-    ]);
-}
 
 
 
@@ -156,13 +117,16 @@ public function register(ManagerRegistry $doctrine, Request $request, UserPasswo
     if ($form->isSubmitted() && $form->isValid()) {
         $hash=$encoder->encodePassword($user,$user->getPassword());
         $user->setPassword($hash);
+
         
         $em= $doctrine->getManager();
         $user = $form->getData();
+        $defaultImageUrl = 'user-avatar.png';
+        $user->setUrlimage($defaultImageUrl);
         $em->persist($user);            
         $em->flush();
-        return $this->redirectToRoute('formulaire', ['idUser' => $user->getIdUser()]);
-       
+        $this->session->set('idUser', $user->getIdUser());
+        return $this->redirectToRoute('formulaire');
     }
    
     return $this->render('user/signup.html.twig', [
@@ -170,9 +134,7 @@ public function register(ManagerRegistry $doctrine, Request $request, UserPasswo
     ]);
 }
 
-
-//send email containing code to reset password
-
+/*
 #[Route('/sendemail', name: 'sendemail')]
     public function sendemail(ManagerRegistry $doctrine, Request $request, UserRepository  $userRepository,  MailerInterface $mailer, \Twig\Environment $twig): Response
     {
@@ -191,12 +153,51 @@ public function register(ManagerRegistry $doctrine, Request $request, UserPasswo
                $em->flush();
                $emailtosend = (new Email())
                 ->from('eyaboukh@gmail.com')
-                ->to($email)
+                ->to($user->getEmail())
                 ->subject('Reset Password Code')
                 ->html($twig->render('email/resetcodesent.html.twig', [
                     'code' => $user->getResetCode(),
                 ]));
             $mailer->send($emailtosend);
+            return $this->redirectToRoute('resetCode');
+            }
+            else
+            {
+                return $this->redirectToRoute('sendemail');
+            }   
+        }
+        return $this->render('user/sendEmail.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+*/ 
+//send email containing code to reset password
+
+#[Route('/sendemail', name: 'sendemail')]
+    public function sendemail(ManagerRegistry $doctrine, Request $request, UserRepository  $userRepository,   MailerInterface $mailer): Response
+    {
+        $user = new User();
+        $form = $this->createForm(SendEmailType::class, $user);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() ) {
+            $em= $doctrine->getManager();
+            $email = $form['email']->getData();
+            $user = $user = $userRepository->findOneByEmail($email);
+            if($user){
+               $this->session->set('reset_user_email', $user->getEmail());
+               $code= $user->generateResetCode();
+               $user->setResetCode($code);
+               $em->persist($user);            
+               $em->flush();
+               $emailtosend = (new Email())
+                ->from('eyaboukh@gmail.com')
+                ->to($user->getEmail())
+                ->subject('Reset Password Code')
+                ->html($twig->render('email/resetcodesent.html.twig', [
+                    'code' => $user->getResetCode(),
+                ]));
+            $mailer->send($emailtosend);
+            
             return $this->redirectToRoute('resetCode');
             }
             else
@@ -219,6 +220,7 @@ public function register(ManagerRegistry $doctrine, Request $request, UserPasswo
             $code = $form['resetCode']->getData();
             $email = $this->session->get('reset_user_email');
             $user=$userRepository->findOneByEmail( $email);
+            
             if($user || $code==$user->getResetCode()){
                 return $this->redirectToRoute('newPass'); 
             }
@@ -266,11 +268,14 @@ public function register(ManagerRegistry $doctrine, Request $request, UserPasswo
     public function edit(Request $request): Response
     {
         $user = $this->getUser();
+        
         $form = $this->createForm(UpdateType::class, $user);
-        $imageForm = $this->createForm(ImageType::class);
+        $imageForm = $this->createForm(ImageType::class, $user);
+        if ($user!==null){
 
-        $form->handleRequest($request);
-        $imageForm->handleRequest($request);
+        if ($request->isMethod('POST')) {
+            $form->handleRequest($request);
+            $imageForm->handleRequest($request);
 
         if ($form->isSubmitted() ) {
             $this->editUser($form->getData());
@@ -298,7 +303,8 @@ public function register(ManagerRegistry $doctrine, Request $request, UserPasswo
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($user);
         $entityManager->flush();
-
+    }
+}
         return $this->render('user/settings-profile.html.twig', [
             'form' => $form->createView(),
             'imageForm' => $imageForm->createView(),
@@ -341,18 +347,58 @@ public function register(ManagerRegistry $doctrine, Request $request, UserPasswo
         ManagerRegistry $doctrine,Request $request): Response
     {
         $user = $this->getUser();
-        $em= $doctrine->getManager();
+        if($user){
+            $em= $doctrine->getManager();
         
-       $em->remove($user);
-        $em->flush();
-       $request->getSession()->invalidate();
-       $this->container->get('security.token_storage')->setToken(null);
+            $em->remove($user);
+             $em->flush();
+            $request->getSession()->invalidate();
+            $this->container->get('security.token_storage')->setToken(null);
+            return $this-> redirectToRoute('app_front_office');
+        }
+  
+       
+    }
+    #[Route('/blogslist', name: 'app_blogslist', methods: ['GET'])]
+    public function blogslist(BlogRepository $blogRepository): Response
+{
+    
+    return $this->render('blog/blogs.html.twig', [
+        'blogs' => $blogRepository->findAll(),
+        'likedblogs' => $blogRepository->findMostLikedPosts(4),
+    ]);
+}
 
-      
-       return $this-> redirectToRoute('app_front_office');
+
+    #[Route('/app_blog_show/{id}', name: 'app_blog_show', methods: ['GET'])]
+    public function show(Blog $blog): Response
+    {
+        return $this->render('blog/blog-details.html.twig', [
+            'blog' => $blog,
+        ]);
     }
 
-    
+    #[Route('/incrementLikes/{id}', name: 'increment_likes', methods: ['POST'])]
+    public function incrementLikes(Request $request, int $id)
+{
+    // Fetch the blog post from the database
+    $entityManager = $this->getDoctrine()->getManager();
+    $blog = $entityManager->getRepository(Blog::class)->find($id);
+
+    // If the blog post does not exist, return an error response
+    if (!$blog) {
+        return new JsonResponse(['error' => 'Blog post not found'], 404);
+    }
+
+    // Increment the number of likes
+    $blog->setNbrOfLikes($blog->getNbrOfLikes() + 1);
+
+    // Save the changes to the database
+    $entityManager->flush();
+
+    // Return a JSON response with the updated number of likes
+    return new JsonResponse(['idBlog' => $blog->getId(), 'nbrOfLikes' => $blog->getNbrOfLikes()]);
+}
 
    
 }

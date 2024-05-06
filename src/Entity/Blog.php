@@ -17,7 +17,7 @@ class Blog
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type:'text')]
     private ?string $content = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
@@ -29,8 +29,13 @@ class Blog
     #[ORM\Column(length: 255)]
     private ?string $blogImage = null;
 
-    #[ORM\Column(type: Types::ARRAY)]
-    private array $tags = [];
+    #[ORM\Column(length: 255)]
+    private ?string $tags = null;
+    public function __construct()
+    {
+        $this->datePublished = new \DateTime(); // Set default value to today's date
+    }
+
 
     public function getId(): ?int
     {
@@ -70,6 +75,7 @@ class Blog
 
     public function setDatePublished(\DateTimeInterface $datePublished): static
     {
+        
         $this->datePublished = $datePublished;
 
         return $this;
@@ -99,12 +105,13 @@ class Blog
         return $this;
     }
 
-    public function getTags(): array
+    
+    public function getTags(): ?string
     {
         return $this->tags;
     }
 
-    public function setTags(array $tags): static
+    public function setTags(string $tags): static
     {
         $this->tags = $tags;
 

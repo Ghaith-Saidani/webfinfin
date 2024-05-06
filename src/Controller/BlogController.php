@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Gedmo\Sluggable\Util\Urlizer;
 use App\Entity\Blog;
 use App\Form\BlogType;
 use App\Repository\BlogRepository;
@@ -10,10 +11,17 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 #[Route('/blog')]
 class BlogController extends AbstractController
 {
+
+    public function __construct()
+    {
+         
+    }
     #[Route('/', name: 'app_blog_index', methods: ['GET'])]
     public function index(BlogRepository $blogRepository): Response
     {
@@ -30,7 +38,22 @@ class BlogController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() ) {
+             /** @var UploadedFile $uploadedFile */
+             $uploadedFile = $form['imageFile']->getData();
+             if ($uploadedFile){
+ 
+                $destination = $this->getParameter('kernel.project_dir').'/public/images/blog';
+             $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
+             $newFilename = Urlizer::urlize($originalFilename).'-'.uniqid().'.'.$uploadedFile->guessExtension();
+             $uploadedFile->move(
+                 $destination,
+                 $newFilename
+             );
+             $blog->setBlogImage($newFilename);
+
+
             
+        }
             $entityManager->persist($blog);
             $entityManager->flush();
 
@@ -79,4 +102,8 @@ class BlogController extends AbstractController
 
         return $this->redirectToRoute('app_blog_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    
+
+    
 }

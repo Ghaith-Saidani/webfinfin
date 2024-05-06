@@ -1,0 +1,132 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+
+
+
+		<h1 class="sitetitle">Blogs</h1>
+		
+
+	<section class="featured-posts">
+	<div class="section-title">
+		<h2><span>Most Liked</span></h2>
+	</div>
+	<div class="card-columns listfeaturedtag">
+    {% for blog in likedblogs %}
+        <div class="card">
+            <div class="row">
+                <div class="col-md-5 wrapthumbnail">
+                    <a href="{{ path('app_blog_show', {'id': blog.id}) }}">
+                        <div class="thumbnail" style="background-image:url({{ asset('images/blog/' ~ blog.blogImage) }});"></div>
+                    </a>
+                </div>
+                <div class="col-md-7">
+                    <div class="card-block">
+                        <h2 class="card-title"><a href="{{ path('app_blog_show', {'id': blog.id}) }}">{{ blog.title }}</a></h2>
+                        <h4 class="card-text" style="max-height: 90px; overflow: hidden; text-overflow: ellipsis;">{{ blog.content }}</h4>
+                        <div class="metafooter">
+                            <div class="wrapfooter">
+                                <span class="meta-footer-thumb">
+                                    
+                                    <span class="post-name" style="background-color: #FFDDD2; border-radius: 20px; padding: 5px;">{{blog.tags}}</span><br/>
+                                    <span class="post-date">{{ blog.datePublished|date('d F Y') }}</span><span class="dot"></span>
+                                </span>
+                                <span class="post-read-more"><a href="{{ path('app_blog_show', {'id': blog.id}) }}" title="Read Story"><svg class="svgIcon-use" width="25" height="25" viewbox="0 0 25 25"><path d="" fill-rule="evenodd"></path></svg></a></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+</section>
+	<!-- End Featured
+	================================================== -->
+
+	<!-- Begin List Posts
+	================================================== -->
+	<section class="recent-posts">
+    <div class="section-title">
+        <h2><span>All Blogs</span></h2>
+    </div>
+    <div class="card-columns listrecent">
+        {% for blog in blogs %}
+            <div class="card" height='100px'>
+                <a href="{{ path('app_blog_show', {'id': blog.id}) }}">
+                    <img class="img-fluid" src="{{ asset('images/blog/' ~ blog.blogImage) }}" alt="{{ blog.title }}">
+                </a>
+                <div class="card-block">
+                    <h2 class="card-title"><a href="{{ path('app_blog_show', {'id': blog.id}) }}">{{ blog.title }}</a></h2>
+                    <h4 class="card-text" style="max-height: 90px; overflow: hidden; text-overflow: ellipsis;">{{ blog.content }}</h4>
+                    <div class="metafooter">
+                        <div class="wrapfooter">
+                            <span class="meta-footer-thumb">
+                                <span class="post-date">{{ blog.datePublished|date('d F Y') }}</span><span class="dot"></span>
+                            </span>
+                            <span class="post-read-more">
+                                <a href="{{ path('app_blog_show', {'id': blog.id}) }}" title="Read Story">
+                                    <svg class="svgIcon-use" width="25" height="25" viewbox="0 0 25 25">
+                                        <path d="M19 6c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v14.66h.012c.01.103.045.204.12.285a.5.5 0 0 0 .706.03L12.5 16.85l5.662 4.126a.508.508 0 0 0 .708-.03.5.5 0 0 0 .118-.285H19V6zm-6.838 9.97L7 19.636V6c0-.55.45-1 1-1h9c.55 0 1 .45 1 1v13.637l-5.162-3.668a.49.49 0 0 0-.676 0z" fill-rule="evenodd"></path>
+                                    </svg>
+                                </a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+	<!-- End List Posts
+	================================================== -->
+
+	<!-- Begin Footer
+	================================================== -->
+	<div class="footer">
+		<p class="pull-left">
+			 Copyright &copy; 2017 Your Website Name
+		</p>
+		<p class="pull-right">
+			 Mediumish Theme by <a target="_blank" href="https://www.wowthemes.net">WowThemes.net</a>
+		</p>
+		<div class="clearfix">
+		</div>
+	</div>
+	<!-- End Footer
+	================================================== -->
+
+</div>
+<!-- /.container -->
+
+<!-- Bootstrap core JavaScript
+    ================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+
+
+{% endblock %}
+{% block css %}
+ <link rel="stylesheet" href="{{asset('css/style.css')}}">
+ <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
+  <link rel="stylesheet" href="{{asset('css/mediumish.css')}}">
+ <link rel="stylesheet" href="{{asset('css/style1.css')}}">
+ <link rel="stylesheet" href="{{asset('vendor/toastr/toastr.min.css')}}">
+{% endblock %}
+
+{% block js %}
+ <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
+    <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <!--  -->
+    <!--  -->
+    <script src="{{asset('js/scripts.js')}}"></script>
+    <script src="{{asset('js/bootstrap.min.js')}}"></script>
+    <script src="{{asset('js/ie10-viewport-bug-workaround.js')}}"></script>
+    <script src="{{asset('js/jquery.min.js')}}"></script>
+    <script src="{{asset('js/mediumish.js')}}"></script>
+
+
+
+    
+{% endblock %}

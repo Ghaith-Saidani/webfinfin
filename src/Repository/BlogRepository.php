@@ -20,6 +20,14 @@ class BlogRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Blog::class);
     }
+    public function findMostLikedPosts($limit = 4)
+    {
+        return $this->createQueryBuilder('b')
+            ->orderBy('b.nbrOfLikes', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
 
 //    /**
 //     * @return Blog[] Returns an array of Blog objects

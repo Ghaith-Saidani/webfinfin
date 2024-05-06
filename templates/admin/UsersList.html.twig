@@ -50,7 +50,33 @@ Admin panel
 
         </tbody>
     </table>
-    {{ knp_pagination_render(list) }}
+    {% block pagination %}
+                    {% if list is defined and list is not empty %}
+                        <div class="pagination justify-content-center" id="pagination">
+                            <ul class="pagination">
+                                {% if list.currentPageNumber > 1 %}
+                                    <li class="page-item"><a class="page-link" href="{{ path(app.request.attributes.get('_route'), app.request.query|merge({ 'page': list.currentPageNumber - 1 })) }}">&laquo;</a></li>
+                                {% else %}
+                                    <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
+                                {% endif %}
+
+                                {% for page in 1..list.pageCount %}
+                                    {% if page != list.currentPageNumber %}
+                                        <li class="page-item"><a class="page-link" href="{{ path(app.request.attributes.get('_route'), app.request.query|merge({ 'page': page })) }}">{{ page }}</a></li>
+                                    {% else %}
+                                        <li class="page-item active"><span class="page-link">{{ page }}</span></li>
+                                    {% endif %}
+                                {% endfor %}
+
+                                {% if list.currentPageNumber < list.pageCount %}
+                                    <li class="page-item"><a class="page-link" href="{{ path(app.request.attributes.get('_route'), app.request.query|merge({ 'page': list.currentPageNumber + 1 })) }}">&raquo;</a></li>
+                                {% else %}
+                                    <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                {% endblock %}
 </body>
 {% endblock %}
 
