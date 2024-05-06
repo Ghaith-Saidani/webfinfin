@@ -1,0 +1,14 @@
+.btn {
+    border: none; /* Remove borders */
+    width:60px;
+    height:60px;
+    padding: 12px 12px; /* Some padding */
+    font-size: 16px; /* Set a font size */
+    cursor: pointer; /* Mouse pointer on hover */
+  }
+  
+  /* Darker background on mouse-over */
+  .btn:hover {
+    background-color: #EDF6F9;
+  }
+  
